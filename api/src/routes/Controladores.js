@@ -114,12 +114,20 @@ const getPokemonId = async (req,res)=>{
 
 const postPokemon = async (req,res) =>{
 
-    const {name, hp, attack, defense, speed, height, weight} = req.body;
+    const {name, hp, attack, defense, speed, height, weight, types, createInBD} = req.body;
 
 
-    const newPokemon =  Pokemon.create( name, hp, attack, defense, speed, height, weight)  
+    const newPokemon =  await Pokemon.create({ name, hp, attack, defense, speed, height, weight, createInBD })  ;
 
-    res.send(newPokemon)
+    const tipoBD = await Tipo.findAll({
+        where:{
+            name: types
+        }
+    });
+
+    newPokemon.addTipos(tipoBD)
+
+    res.send("newPokemon listo")
     
 };
 
