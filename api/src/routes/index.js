@@ -13,6 +13,7 @@ const router = Router();
 
 router.get("/pokemons", getPokemones);
 router.get("/pokemons/:idPokemon", getPokemonId );
+
 router.get("/types", getTipos);
 
 router.post("/pokemons", postPokemon)

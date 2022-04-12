@@ -1,6 +1,6 @@
 const axios = require("axios");
 
-const {Pokemon, Tipo} = require('../db')
+const {Pokemon, Type} = require('../db')
 
 const getPokemonApi = async (req,res) =>{
     // const URL = `https://pokeapi.co/api/v2/pokemon`
@@ -12,8 +12,6 @@ const getPokemonApi = async (req,res) =>{
     //       id = {...todo}
     //       return id
     //     }),
-    
-   
         const api = await  axios.get(`https://pokeapi.co/api/v2/pokemon?offset=0&limit=20`);
         const infoApi = await api.data.results.map(p=> axios.get(p.url));
         const infoPoke = await axios.all(infoApi);
@@ -29,7 +27,7 @@ const getPokemonApi = async (req,res) =>{
                 speed: p.stats[5].base_stat,
                 height: p.height,
                 weight: p.weight,
-                image: p.sprites.other.home.front_shiny,
+                image: p.sprites.other["official-artwork"].front_default,           //home.front_shiny,   //["algo-medio"]
                 types: p.types.map(t=>t.type.name)
                 
             }
@@ -41,11 +39,11 @@ const getPokemonApi = async (req,res) =>{
 const getPokemonBD = async ()=>{
 
     const pokemonesBD = await Pokemon.findAll({
-        atributes: ['id', 'name', 'hp', 'attack', 'defense', 'speed', 'height', 'weight', 'image' ], 
+        attributes: ['id', 'name', 'hp', 'attack', 'defense', 'speed', 'height', 'weight', 'image' ], 
         include:{
-            model: Tipo,
-            atributes: ['name'],
-            throw: { atributes: [] }
+            model: Type,
+            attributes: ['name'],
+            through: { attributes: [] }
         }
     })
     return pokemonesBD;
@@ -75,9 +73,7 @@ const getPokemones = async (req,res) => {
     } else{
         res.send(pokemones)
     }
-
-
-    
+   
     
 }
 
@@ -97,38 +93,27 @@ const getPokemonId = async (req,res)=>{
 
 };
 
-// const getPokemonName = async (req,res) =>{
-//     const {name} = req.query;
-
-//     const pokemones = await getPokemonesTotal();
-
-//     if(name) {
-//         const pokeName = await pokemones.find( p => p.name === name    );
-//         res.send(pokeName)
-        
-//     } else {
-
-//         res.status(404).send("El nombre no existe")
-//     }
-// }
 
 const postPokemon = async (req,res) =>{
-
-    const {name, hp, attack, defense, speed, height, weight, types, createInBD} = req.body;
-
-
-    const newPokemon =  await Pokemon.create({ name, hp, attack, defense, speed, height, weight, createInBD })  ;
-
-    const tipoBD = await Tipo.findAll({
-        where:{
-            name: types
-        }
-    });
-
-    newPokemon.addTipos(tipoBD)
-
-    res.send("newPokemon listo")
+   const {name, hp, attack, defense, speed, height, weight,  createInBD, types} = req.body;
+   
+    //como para obtengo todos los tipos de antemano?
+        
+    try {
+      
+        const newPokemon =  await Pokemon.create({ name, hp, attack, defense, speed, height, weight, createInBD })  ;
+       const tipoBD = await Type.findAll({
+        where:{ 
+            name: types }
+    }); 
     
+    newPokemon.addType(tipoBD)
+    
+    res.send("newPokemon listo")
+} catch (error) {
+    res.send("error al crear")
+}
+
 };
 
 const getTipos = async (req,res) =>{
@@ -136,14 +121,14 @@ const getTipos = async (req,res) =>{
     const tiposApi = await api.data.results.map( t => t.name)
 
     tiposApi.forEach( t => {
-        Tipo.findOrCreate({
+        Type.findOrCreate({
             where: {
                 name:t
             }
         })
     })
    
-    const tiposAll = await Tipo.findAll();
+    const tiposAll = await Type.findAll();
     res.send(tiposAll)
 
 }
