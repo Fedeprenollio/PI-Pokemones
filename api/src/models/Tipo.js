@@ -7,5 +7,5 @@ module.exports = (sequelize) => {
         allowNull: false,
         // prevenDefault:["ice","fire"] 
       }
-    })  
+    })   
 };

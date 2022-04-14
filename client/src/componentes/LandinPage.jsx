@@ -1,13 +1,17 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-export const LandinPage = () => {
+export default function LandingPage() {
   return (
     <div>
       <h1>Pagina principal</h1>
-      <Link to="/pokemons">
-        <button>Home</button>
-      </Link>
+      <Link to="/pokemons" >
+      <button>Ingresar</button>
+      
+      </Link>     
+
     </div>
   );
 };
+
+

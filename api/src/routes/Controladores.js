@@ -3,7 +3,8 @@ const axios = require("axios");
 const {Pokemon, Type} = require('../db')
 
 const getPokemonApi = async (req,res) =>{
-    // const URL = `https://pokeapi.co/api/v2/pokemon`
+    // // const URL = `https://pokeapi.co/api/v2/pokemon`
+
 
     // const result =  await Promise.all(
     //     data.map(async (id) => {
@@ -12,11 +13,13 @@ const getPokemonApi = async (req,res) =>{
     //       id = {...todo}
     //       return id
     //     }),
-        const api = await  axios.get(`https://pokeapi.co/api/v2/pokemon?offset=0&limit=20`);
-        const infoApi = await api.data.results.map(p=> axios.get(p.url));
+        const api = await  axios(`https://pokeapi.co/api/v2/pokemon?limit=30`);
+        // console.log(api.data.results)
+        const infoApi = await api.data.results.map(p=> axios(p.url));
         const infoPoke = await axios.all(infoApi);
-    
+           
         const pokemon = infoPoke.map(p=>p.data);
+        // console.log(pokemon)
         const pokeDetail=pokemon.map(p=>{
             return{
                 id: p.id,
@@ -34,20 +37,27 @@ const getPokemonApi = async (req,res) =>{
         })
 
              return pokeDetail
+   
 }
 
 const getPokemonBD = async ()=>{
 
     const pokemonesBD = await Pokemon.findAll({
-        attributes: ['id', 'name', 'hp', 'attack', 'defense', 'speed', 'height', 'weight', 'image' ], 
-        include:{
+         
+        // raw: true,
+        // nest: true ,
+        include: 
+        {          
             model: Type,
             attributes: ['name'],
             through: { attributes: [] }
-        }
+         } 
     })
+
+
+    console.log(pokemonesBD)
     return pokemonesBD;
-}
+} 
 
 const getPokemonesTotal = async()=>{
     const pokemonesApi = await getPokemonApi();
@@ -65,13 +75,13 @@ const getPokemones = async (req,res) => {
     if(name) {
         const pokeName = await pokemones.find( p => p.name.toLowerCase() === name.toLowerCase()    );
             if(pokeName) {
-                res.send(pokeName)
+                res.status(200).send(pokeName)
             }else {
                 res.status(404).send("El pokemon no existe")
             }
 
     } else{
-        res.send(pokemones)
+        res.status(200).send(pokemones)
     }
    
     
@@ -84,7 +94,7 @@ const getPokemonId = async (req,res)=>{
         
         try {
             const selectPokemonId = await pokemones.find( (p)=>( p.id === parseInt(idPokemon)) );
-            res.send(selectPokemonId);
+            res.status(200).send(selectPokemonId);
             
         } catch (error) {
             res.status(404).send("Algo anda mal");
@@ -95,20 +105,24 @@ const getPokemonId = async (req,res)=>{
 
 
 const postPokemon = async (req,res) =>{
-   const {name, hp, attack, defense, speed, height, weight,  createInBD, types} = req.body;
+   const {name, hp, attack, defense, speed, height, weight, image , createInBD, types} = req.body;
    
     //como para obtengo todos los tipos de antemano?
         
     try {
       
-        const newPokemon =  await Pokemon.create({ name, hp, attack, defense, speed, height, weight, createInBD })  ;
+        const newPokemon =  await Pokemon.create({ name, hp, attack, defense, speed, height, weight, createInBD , image})  ;
+        
+
+   await downloadOfApiType()
        const tipoBD = await Type.findAll({
+           
         where:{ 
-            name: types }
+            name: types } 
     }); 
-    
+       
     newPokemon.addType(tipoBD)
-    
+    // console.log(newPokemon)
     res.send("newPokemon listo")
 } catch (error) {
     res.send("error al crear")
@@ -116,20 +130,42 @@ const postPokemon = async (req,res) =>{
 
 };
 
-const getTipos = async (req,res) =>{
+const downloadOfApiType = async ()=>{
     const api = await axios.get(`https://pokeapi.co/api/v2/type`)
     const tiposApi = await api.data.results.map( t => t.name)
 
-    tiposApi.forEach( t => {
+    tiposApi.forEach( t => { 
+ 
         Type.findOrCreate({
-            where: {
-                name:t
+            where:{
+                name: t
             }
         })
     })
    
-    const tiposAll = await Type.findAll();
-    res.send(tiposAll)
+        
+}
+
+
+const getTipos = async (req,res) =>{
+    // const api = await axios.get(`https://pokeapi.co/api/v2/type`)
+    // const tiposApi = await api.data.results.map( t => t.name)
+
+    // tiposApi.forEach( t => {
+    //     Type.findOrCreate({
+    //         where: {
+    //             name:t
+    //         }
+    //     })
+    // })
+   
+    // const tiposAll = await Type.findAll();
+    // res.send(tiposAll)
+
+
+    await downloadOfApiType()
+    const typesAll = await Type.findAll()
+    res.status(200).send(typesAll)
 
 }
 

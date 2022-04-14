@@ -1,8 +1,9 @@
 import { GET_POKEMONES } from "../action";
 
 
-const inicialState= {
+ let inicialState= {
     pokemon: []
+    
 }
 
 
@@ -14,20 +15,12 @@ switch (action.type) {
                     pokemon: action.payload}
         
 
-    default:
-        break;
+    default: return state
+        
 }
 
 
 }
-
-
-
-
-
-
-
-
 
 
 
