@@ -2,8 +2,8 @@ const axios = require("axios");
 
 const {Pokemon, Type} = require('../db')
 
-const getPokemonApi = async (req,res) =>{
-    // // const URL = `https://pokeapi.co/api/v2/pokemon`
+const getPokemonApi = async  (req,res) =>{
+    // const URL = `https://pokeapi.co/api/v2/pokemon`
 
 
     // const result =  await Promise.all(
@@ -13,7 +13,43 @@ const getPokemonApi = async (req,res) =>{
     //       id = {...todo}
     //       return id
     //     }),
-        const api = await  axios(`https://pokeapi.co/api/v2/pokemon?limit=30`);
+
+    //----------------------
+    // const getPokemons = async () => {
+    //     const response = await axios.get(
+    //       "https://pokeapi.co/api/v2/pokemon?limit=20"
+    //     );
+    //     console.log(response)
+    //     return response;
+
+    //   };
+
+    //   const rest = await getPokemons();
+    //   const names = rest.data?.results.map((item) => item.name);
+
+    //   const fullData = await Promise.all(
+    //     names.map(async (name) => {
+    //       const info = await axios(
+    //         `https://pokeapi.co/api/v2/pokemon/${name}`
+    //       );
+
+    //       return {
+    //         name: info.data.name,
+    //         img: `https://play.pokemonshowdown.com/sprites/xyani/${info.data.name}.gif`,
+    //         tipos: info.data.types.map((type) => type.type.name),
+    //         hp: info.data.stats[0].base_stat,
+    //         attack: info.data.stats[1].base_stat,
+    //         defense: info.data.stats[2].base_stat,
+    //         speed: info.data.stats[5].base_stat,
+    //         id: info.data.id
+    //       };
+    //     })
+    //   );
+      
+    //   res.send(fullData)
+      //---------
+
+        const api = await  axios(`https://pokeapi.co/api/v2/pokemon?limit=10`);
         // console.log(api.data.results)
         const infoApi = await api.data.results.map(p=> axios(p.url));
         const infoPoke = await axios.all(infoApi);
@@ -35,17 +71,18 @@ const getPokemonApi = async (req,res) =>{
                 
             }
         })
-
+//console.log(pokeDetail)
              return pokeDetail
-   
+
+
 }
 
-const getPokemonBD = async ()=>{
+const getPokemonBD = async (req,res)=>{
 
     const pokemonesBD = await Pokemon.findAll({
          
-        // raw: true,
-        // nest: true ,
+       // raw: true,
+        
         include: 
         {          
             model: Type,
@@ -54,14 +91,20 @@ const getPokemonBD = async ()=>{
          } 
     })
 
-
-    console.log(pokemonesBD)
+//     console.log(pokemonesBD)
+// //console.log(pokemonesBD)
+//     res.send(pokemonesBD)
     return pokemonesBD;
 } 
 
 const getPokemonesTotal = async()=>{
     const pokemonesApi = await getPokemonApi();
     const pokemonesBD  = await getPokemonBD();
+
+    // Promise.all([getPokemonApi()], [getPokemonBD()])
+    //     .then([A.data.results , B]) = pokemonesTotales
+
+    //     console.log(A.data.results)
     const pokemonesTotales = pokemonesApi.concat(pokemonesBD)
 
     return pokemonesTotales;
@@ -73,7 +116,9 @@ const getPokemones = async (req,res) => {
     const pokemones = await getPokemonesTotal()
 
     if(name) {
-        const pokeName = await pokemones.find( p => p.name.toLowerCase() === name.toLowerCase()    );
+       
+        const pokeName = await pokemones.filter( p => p.name.toLowerCase() === name.toLowerCase()    );
+       
             if(pokeName) {
                 res.status(200).send(pokeName)
             }else {
@@ -93,7 +138,7 @@ const getPokemonId = async (req,res)=>{
         const pokemones = await getPokemonesTotal();
         
         try {
-            const selectPokemonId = await pokemones.find( (p)=>( p.id === parseInt(idPokemon)) );
+            const selectPokemonId = await pokemones.find( (p)=>( p.id.toString() === idPokemon.toString()) );
             res.status(200).send(selectPokemonId);
             
         } catch (error) {
@@ -105,7 +150,9 @@ const getPokemonId = async (req,res)=>{
 
 
 const postPokemon = async (req,res) =>{
-   const {name, hp, attack, defense, speed, height, weight, image , createInBD, types} = req.body;
+    
+
+    const {name, hp, attack, defense, speed, height, weight, image , createInBD, types} = req.body;
    
     //como para obtengo todos los tipos de antemano?
         
@@ -115,14 +162,20 @@ const postPokemon = async (req,res) =>{
         
 
    await downloadOfApiType()
+
        const tipoBD = await Type.findAll({
            
         where:{ 
             name: types } 
+
     }); 
-       
-    newPokemon.addType(tipoBD)
-    // console.log(newPokemon)
+
+     
+      console.log(  tipoBD)
+
+   await newPokemon.addType(tipoBD   )
+    //
+     //console.log(newPokemon)
     res.send("newPokemon listo")
 } catch (error) {
     res.send("error al crear")

@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { getPokemones, getPokemonId, getTipos, postPokemon } = require('./Controladores');
+const { getPokemonesTotal, getPokemonId, getTipos, postPokemon,getPokemones } = require('./Controladores');
 
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
