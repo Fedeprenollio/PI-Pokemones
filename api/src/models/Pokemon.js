@@ -25,7 +25,7 @@ module.exports = (sequelize) => {
       allowNull: false,
       validate: {
         min:1,
-        max:1000
+        max:500
 
       }
     },
@@ -34,7 +34,7 @@ module.exports = (sequelize) => {
       allowNull: false,
       validate: {
         min:1,
-        max:1000
+        max:500
 
       }
     },
@@ -43,7 +43,7 @@ module.exports = (sequelize) => {
       allowNull: false,
       validate: {
         min:1,
-        max:1000
+        max:500
 
       }
     },
@@ -70,13 +70,13 @@ module.exports = (sequelize) => {
       allowNull: false,
       validate: {
         min:1,
-        max:1000,
+        max:1500,
          
-        esValido(value){
-          if(value>=1000){
-            throw new Error ("El valor debe ser entre 0 y 1000");
-          }
-        }
+        // esValido(value){
+        //   if(value>=1000){
+        //     throw new Error ("El valor debe ser entre 0 y 1000");
+        //   }
+        // }
       },
     },
     image: {

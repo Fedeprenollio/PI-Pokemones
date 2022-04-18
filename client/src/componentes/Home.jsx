@@ -202,7 +202,10 @@ export default function Home() {
       <div>
         {currentPokes &&
           currentPokes.map((p) => (
-            <Card types={p.types} createInBD={p.createInBD} name={p.name} image={p.image} />
+            <Link to={"/home/" + p.id}>
+              <Card types={p.types} createInBD={p.createInBD} name={p.name} image={p.image} />
+            </Link>
+
           ))}
       </div>
     </>

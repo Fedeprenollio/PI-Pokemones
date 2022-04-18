@@ -1,4 +1,5 @@
 import React from "react";
+import {Link} from "react-router-dom"
 
 
 
@@ -10,17 +11,15 @@ export default  function  Card ({name, image, createInBD, types}){
 
     return(
         <div>
-            <h2>{name}</h2>
+            
+                 <h2>{name}</h2>
+            
             <div>
             <img src={image} alt="pokemones" />
             </div>
           
                    <h3>Tipo:</h3>
-                {/* {
-                    (createInBD===true) ? types.map( (t,i) =>  <h3 >{Object.values(types[i])} </h3>)   : types.map( (p)=> <h3>{p}</h3> )
-             } */}
-
-                {
+                          {
 
                     (createInBD===true) ? types.map( (t,i) =>  <h3 >{Object.values(types[i])} </h3>)   : types.map( (p)=> <h3>{p}</h3> )
                     }

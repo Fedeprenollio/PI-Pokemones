@@ -9,6 +9,7 @@ export const ORDER_BY_HP = "ORDER_BY_HP";
 export const CREATED = "CREATED";
 export const SEARCH = "SEARCH"
 export const FILTER_TYPE = "FILTER_TYPE";
+export const GET_DETAIL = "GET_DETAIL";
 
 
 
@@ -75,7 +76,7 @@ export const filterByType = (payload) =>{
         payload
     }
 
-}
+};
 
 export const searchPoke = (name) => {
     return async function (dispatch) {
@@ -87,4 +88,21 @@ export const searchPoke = (name) => {
         })
 
     }
+};
+
+export function getDetail (id){
+
+return async function (dispatch){
+    try {
+        let json = await axios( `http://localhost:3001/pokemons/${id}` )     
+        return dispatch({
+            type:GET_DETAIL,
+            payload: json.data
+        })
+    } catch (error) {
+        console.log(error)
+    }
+
+
+}    
 }

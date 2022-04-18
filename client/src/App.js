@@ -5,6 +5,7 @@ import  LandinPage  from "./componentes/LandinPage";
 import Home from "./componentes/Home"; 
 import { Nav } from "./componentes/Nav";
 import Creation from "./componentes/Creation"
+import { Detail } from "./componentes/Detail";
 
 // const Layout = () => <h1>Probando</h1>
 
@@ -18,6 +19,8 @@ function App() {
           <Route exact path ="/" element={<LandinPage/>} />
           <Route path ="/created" element={<Creation/>} /> 
           <Route path ="/home" element={<Home/>} /> 
+          <Route path ="/home/:id" element={<Detail/>} /> 
+
 
           <Route path="*" element={<h1>404 not found</h1>}></Route>
         </Routes>

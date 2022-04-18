@@ -1,11 +1,12 @@
 
-import { GET_POKEMONES, FILTER_TYPE, CREATED, SEARCH, ORDER_ALFAB, ORDER_BY_HP, POST_POKEMONES, GET_TYPES } from "../action";
+import { GET_POKEMONES, FILTER_TYPE, CREATED, SEARCH, ORDER_ALFAB, ORDER_BY_HP, POST_POKEMONES, GET_TYPES, GET_DETAIL } from "../action";
 
 
 let inicialState = {
     pokemon: [],
     allPokemonsForFilter: [],
-    types: []
+    types: [],
+    detail: []
 
 }
 
@@ -67,67 +68,27 @@ function rootReducer(state = inicialState, action) {
                 pokemon: pokeOrderHP
             }
 
-        // case FILTER_TYPE:
-        //   const allPokemons = state.allPokemonsForFilter;
-        //   const pokeFilter = (allPokemons.createInBD) && action.payload === "all" ? allPokemons : allPokemons.filter( p => p.types.toString() === action.payload)
-        //  //console.log(allPokemons[7].types.toString())
-        //  console.log(  pokeFilter)
-        // const pokeFilterBD = (!allPokemons.createInBD) && action.payload === "all" ? allPokemons : allPokemons.filter( p => p.types.toString() === action.payload)
-        // console.log(typeof  pokeFilterBD)
-        //  return {
-        //         ...state,
-        //       pokemon: pokeFilter.concat(pokeFilterBD)
-        //        
-        // }
-
         case FILTER_TYPE:
-
-            // const allPokemonsF = state.allPokemonsForFilter;
-            // const pokeFilterTypeAPI = [];
-            // const pokeFilterTypeBD = [];
-
-            // // pokeFilterTypeAPI = !allPokemonsF.createInBD ? action.payload === "all" ? allPokemonsF : allPokemonsF.filter(p => p.types.includes(action.payload))
-
-            // function filterTypeAPI() {
-            //     if (!allPokemonsF.createInBD) {
-            //         if (action.payload === "all") {
-            //             return  allPokemonsF
-            //         } else {
-            //            return pokeFilterTypeAPI = allPokemonsF.filter(p => p.types.includes(action.payload))
-            //         }
-            //     }
-            // }
-
-            let allPokemonsArr = [];
+           // let allPokemonsArr = [];
             let allPokemons2 = state.allPokemonsForFilter;
 
-             allPokemonsArr.push(allPokemons2)
-
-             //let  pokeFilterArr = [];
-             //let pokeFilter2 = action.payload
-
-             //lo q viene por payload
-            // pokeFilterArr.push(pokeFilter2)
-
+          //   allPokemonsArr.push(allPokemons2)
             let str = action.payload
 
-            let pokeFilterArr = action.payload === "all" ?  allPokemons2 :  allPokemons2.filter(  p=> p.types.includes( str)   )	
-
-         //   let pokeFilterArrBD = allPokemons2.createInBD ? action.payload === "all" ?  allPokemons2 :  allPokemons2.filter(  p=> p.types.includes( str)   )	
-
-            //  for(let i=0 ; i< allPokemonsArr.length ; i++) {
-            //    let pokeFilterArr =  allPokemonsArr.filter(  p=> p.types[i].includes(action.payload)   )
-            //  }
-            //        if(     includes()    )
-
-             
-            console.log(str)
+            let pokeFilterAPI = action.payload === "all" ?  allPokemons2 :  allPokemons2.filter(  p=> p.types.includes( str)   )	
             
+
+
+            const pokeFilterBD=allPokemons2.filter(p=>p.types)
+            const pokeFilterTypeBD = pokeFilterBD.filter(p=>p.types.find(t=>t.name===action.payload))
+
+            const typesAll = pokeFilterAPI.concat(pokeFilterTypeBD) 
+                       
             return {
                 ...state,
-                pokemon: pokeFilterArr
-              //  .concat(pokeFilterArrBD)
-                        }
+                pokemon: typesAll
+              //  .concat(pokeFilterAPIBD)
+             }
 
         case CREATED:
             const allPokemons = state.allPokemonsForFilter;
@@ -144,7 +105,11 @@ function rootReducer(state = inicialState, action) {
                 ...state,
                 pokemon: action.payload
             }
-
+        case GET_DETAIL:
+            return{
+                ...state,
+                detail: action.payload
+            }
 
         default: return state
 
