@@ -49,13 +49,13 @@ const getPokemonApi = async  (req,res) =>{
     //   res.send(fullData)
       //---------
 
-        const api = await  axios(`https://pokeapi.co/api/v2/pokemon?limit=30`);
+        const api = await  axios(`https://pokeapi.co/api/v2/pokemon?limit=40`);
         // console.log(api.data.results)
         const infoApi = await api.data.results.map(p=> axios(p.url));
         const infoPoke = await axios.all(infoApi);
            
         const pokemon = infoPoke.map(p=>p.data);
-        // console.log(pokemon)
+        console.log(infoApi)
         const pokeDetail=pokemon.map(p=>{
             return{
                 id: p.id,

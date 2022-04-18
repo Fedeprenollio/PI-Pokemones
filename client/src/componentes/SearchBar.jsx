@@ -2,6 +2,7 @@ import React from "react";
 import { useState } from "react"
 import {searchPoke} from  "../redux/action"
 import { useDispatch } from "react-redux";
+import { Nav } from "./Nav";
 
 
 export default function SearchBar() {
@@ -25,7 +26,7 @@ export default function SearchBar() {
 
     return (
         <>
-            <h4>Soy una barra de busqueda</h4>
+            <Nav/>
 
             <form onSubmit={(e)=>onSubmit(e)} >
 

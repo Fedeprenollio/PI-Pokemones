@@ -4,9 +4,11 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import Card from "./Card";
+import Nav from "./Nav"
 import { getPokemones, createdInBd, orderByAlfab, orderByHp, getTypes, filterByType } from "../redux/action";
 import { Pagination } from "./Pagination";
 import SearchBar from "./SearchBar";
+import "./Home.css"
 
 
 export default function Home() {
@@ -104,14 +106,21 @@ export default function Home() {
       
   }
     
-  
+  function handleRefresh (e){
+    e.preventDefault()
+      dispatch(getPokemones());
+    
+  }
   
 
 
 
   return (
     <>
+      
       <SearchBar />
+      <button onClick={(e)=> handleRefresh(e)}>Recargar</button>
+
 
       {/* <Link to="/home">
           <button>Cargar de nuevo los pokemones</button>
@@ -189,9 +198,25 @@ export default function Home() {
         
       </div>
 
-      <Link to={"/home/" + Math.floor(Math.random()*(allPokemones.length)) } >
-        <button >Tu poke aleatorio</button>
-     </Link>
+      
+
+      { allPokemones.length>0 &&
+        <div>
+          <Link to={"/home/" + Math.ceil(Math.random()*(allPokemones.length)) } >
+                     <button >Tu poke aleatorio</button>
+              </Link>
+
+                <h3>Pagina {currentPage} </h3>
+
+        </div>
+
+
+      }
+      
+     
+   
+
+      
 
       <Pagination pokemonsInPage={pokemonsInPage}
         allPokemones={allPokemones.length}
@@ -201,15 +226,25 @@ export default function Home() {
         paginadoFirs={paginadoFirs}
         paginadoLast={paginadoLast}
       />
-      <h3>Pagina {currentPage} </h3>
+
+        
+
       <div>
         {currentPokes &&
-          currentPokes.map((p) => (
-            <Link to={"/home/" + p.id}>
-              <Card types={p.types} createInBD={p.createInBD} name={p.name} image={p.image} />
-            </Link>
-
-          ))}
+          
+          currentPokes.map((p) => {
+           return (
+             
+              
+              <div className="cards">
+               <Link to={"/home/" + p.id}>
+                 <Card types={p.types} createInBD={p.createInBD} name={p.name} image={p.image} />
+               </Link>
+              </div>
+              
+                
+            )
+          } )}
       </div>
     </>
   );

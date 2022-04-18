@@ -1,7 +1,8 @@
 import {React, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getDetail } from '../redux/action'
-import {useParams} from "react-router-dom"
+import {Link, useParams} from "react-router-dom"
+import { Nav } from './Nav'
 
 
 export const Detail = (props) => {
@@ -28,6 +29,8 @@ export const Detail = (props) => {
         return (
 
             <>
+                <Nav/>
+
                 {   pokeDetail.name ? 
                     <div>
                        <h1>Nombre: {pokeDetail.name}</h1>

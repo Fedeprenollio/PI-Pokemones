@@ -1,0 +1,7 @@
+.cards{
+    display: inline-block;
+    flex-wrap: wrap;
+    justify-content: center;
+    width:300px;
+    overflow:hidden;
+}

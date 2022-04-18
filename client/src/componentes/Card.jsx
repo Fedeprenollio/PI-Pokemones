@@ -1,6 +1,6 @@
 import React from "react";
 import {Link} from "react-router-dom"
-
+import "./Card.css"
 
 
 export default  function  Card ({name, image, createInBD, types}){
@@ -15,7 +15,7 @@ export default  function  Card ({name, image, createInBD, types}){
                  <h2>{name}</h2>
             
             <div>
-            <img src={image} alt="pokemones" />
+            <img className="img" src={image} alt="pokemones" />
             </div>
           
                    <h3>Tipo:</h3>

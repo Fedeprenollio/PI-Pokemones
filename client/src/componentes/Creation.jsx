@@ -1,8 +1,9 @@
 import { React, useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { postPokemones, getTypes } from "../redux/action";
+import { postPokemones, getTypes, getPokemones } from "../redux/action";
 //import { Link } from "react-router-dom"
-import { useHistory } from "react-router-dom";
+import { Link, useHistory  } from "react-router-dom";
+
 
 function validated(input) {
   let errors = {};
@@ -43,6 +44,9 @@ export default function Creation() {
   const dispatch = useDispatch();
   const types = useSelector((state) => state.types);
 
+  const pokemonsExistente = useSelector( state => state.pokemon)
+console.log(types)
+console.log(pokemonsExistente)
   // const history = useHistory()
 
   const [input, setInput] = useState({
@@ -59,13 +63,24 @@ export default function Creation() {
 
   const [errors, setErrors] = useState({});
 
+  
+  
+
+  
+
   useEffect(() => {
     dispatch(getTypes());
   }, [dispatch]);
+ 
+  useEffect(() => {
+    dispatch(getPokemones());
+  }, [dispatch]);
 
-  function handleForm(e) {
+    function handleForm  (e)    {
     // e.preventValue()
-    setInput({
+     
+    
+      setInput({
       ...input,
       [e.target.name]: e.target.value,
     });
@@ -75,7 +90,7 @@ export default function Creation() {
         [e.target.name]: e.target.value,
       })
     );
-    console.log(errors);
+    
   }
 
   function handleSelect(e) {
@@ -95,6 +110,18 @@ export default function Creation() {
   function handleSubmit(e) {
     e.preventDefault();
     // console.log(input)
+    console.log(pokemonsExistente)
+    const nameRepit = pokemonsExistente.find(p => p.name === input.name )
+    console.log(input.name)
+    console.log(nameRepit)
+    console.log(pokemonsExistente[44].name)
+    if(nameRepit) {
+      alert("El nombre ya existe");
+      return
+    }else { 
+
+   
+    
     dispatch(postPokemones(input));
     alert("Poke Creado");
     setInput({
@@ -108,11 +135,17 @@ export default function Creation() {
       image: "",
       types: [],
     });
-    // history.push("/home")
+    }
+   //  history.push("/home")
   }
 
   return (
     <>
+      <Link to="/home">
+      <button>Home</button>
+      </Link>
+
+
       <h3>Crea tu pokemon</h3>
       <form onSubmit={(e) => handleSubmit(e)}>
 
@@ -124,9 +157,9 @@ export default function Creation() {
             value={input.name}
             name="name"
             placeholder="Nombre"
-           minlength="1" 
-          maxlength="11" 
-           required
+            minLength="1" 
+            maxLength="11" 
+            required
           />
 
           {errors.name && <p className="error">{errors.name} </p>}
@@ -245,9 +278,15 @@ export default function Creation() {
           </select>
         </div>
 
+          {
+
+           !pokemonsExistente ? <button>Crear pokemon </button> :
         <div>
           <button type="submit">Crear pokemon</button>
         </div>
+          }
+
+              
 
         <h5>(*) Campos obligatorios</h5>
       </form>

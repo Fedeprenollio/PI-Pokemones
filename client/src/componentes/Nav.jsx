@@ -15,6 +15,7 @@ export const Nav = () => {
       <Link to="/created">
         <button>Crear pokemon</button>
       </Link>
+      
      
     </div>
   );
