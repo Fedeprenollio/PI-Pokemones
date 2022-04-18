@@ -125,7 +125,7 @@ export default function Creation() {
             name="name"
             placeholder="Nombre"
            minlength="1" 
-           maxlength="11" 
+          maxlength="11" 
            required
           />
 

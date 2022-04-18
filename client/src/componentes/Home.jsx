@@ -189,6 +189,9 @@ export default function Home() {
         
       </div>
 
+      <Link to={"/home/" + Math.floor(Math.random()*(allPokemones.length)) } >
+        <button >Tu poke aleatorio</button>
+     </Link>
 
       <Pagination pokemonsInPage={pokemonsInPage}
         allPokemones={allPokemones.length}

@@ -5,7 +5,7 @@ export default function LandingPage() {
   return (
     <div>
       <h1>Pagina principal</h1>
-      <Link to="/pokemons" >
+      <Link to="/home" >
       <button>Ingresar</button>
       
       </Link>     
