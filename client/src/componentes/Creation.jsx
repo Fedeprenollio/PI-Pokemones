@@ -1,41 +1,94 @@
 import { React, useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { postPokemones, getTypes, getPokemones } from "../redux/action";
-//import { Link } from "react-router-dom"
-import { Link, useHistory  } from "react-router-dom";
 
+import { Link, useNavigate  } from "react-router-dom";
+import styles from "./creation.module.css"
 
 function validated(input) {
   let errors = {};
-  if (!input.name) {
-    errors.name = "Se requiere un nombre";
-  } else if (input.hp > 500 ) {
-    errors.hp = "El valor debe estar entre 1 y 500";
-  } else if ( input.attack > 500) {
-    errors.attack = "El valor debe estar entre 1 y 500";
-  } else if (input.defense > 500) {
-    errors.defense = "El valor debe estar entre 1 y 500";
-  } else if (input.weight > 1500) {
-    errors.weight = "El valor debe estar entre 1 y 1500";
-  } else if (input.speed > 1000) {
-    errors.speed = "El valor debe estar entre 1 y 1000";
-  } else if ( input.height > 500) {
-    errors.height = "El valor debe estar entre 1 y 500";
+  if (input.name) {
+    if (input.name.trim() === "") {
+      errors.name = "Se require un nombre";
+    } else if (input.name.match(/[^a-zA-Z]/)) {
+      errors.name = "El nombre debe ser alfabetico,sin signos ni espacios";
+    } else if (input.name.length < 1) {
+      errors.name = "El nombre debe contener mas de una letra";
+    } else if (input.name.length > 11) {
+      errors.name = "El nombre no puede tener mas de 11 letras";
+    }
   }
-  //-- error de ausencia de dato/
-//   else if (!input.hp) {
-//     errors.hp = "Se requiere la potencia del pokémon";
-//   } else if (!input.attack) {
-//     errors.attack = "Se requiere el ataque del pokémon";
-//   } else if (!input.defense) {
-//     errors.defense = "Se requiere la defensa del pokémon";
-//   } else if (!input.weight) {
-//     errors.weight = "Se requiere el peso del pokémon";
-//   } else if (!input.speed) {
-//     errors.speed = "Se requiere la velocidad del pokémon";
-//   } else if (!input.height) {
-//     errors.height = "Se requiere la altura del pokémon";
-//   }
+
+  if (input.hp) {
+    if (input.hp.trim() === "") {
+      errors.hp = "Se requiere la potencia del pokémon";
+    } else if (input.hp.match([0-9])) {
+      errors.hp = "El valor debe ser numerico";
+    } else if  (input.hp > 500 || input.hp< 1 ) {
+        errors.hp = "El valor debe estar entre 1 y 500";
+    } 
+  }
+
+  if (input.attack) {
+    if (input.attack.trim() === "") {
+      errors.attack = "Se requiere la potencia del pokémon";
+    } else if (input.attack.match([0-9])) {
+      errors.attack = "El valor debe ser numerico";
+    } else if  (input.attack > 500 || input.attack< 1 ) {
+        errors.attack = "El valor debe estar entre 1 y 500";
+    } 
+  }
+
+  if (input.defense) {
+    if (input.defense.trim() === "") {
+      errors.defense = "Se requiere la potencia del pokémon";
+    } else if (input.defense.match([0-9])) {
+      errors.defense = "El valor debe ser numerico";
+    } else if  (input.defense > 500 || input.defense< 1 ) {
+        errors.defense = "El valor debe estar entre 1 y 500";
+    } 
+  }
+
+
+  if (input.weight) {
+    if (input.weight.trim() === "") {
+      errors.weight = "Se requiere la potencia del pokémon";
+    } else if (input.weight.match([0-9])) {
+      errors.weight = "El valor debe ser numerico";
+    } else if  (input.weight > 500 || input.weight< 1 ) {
+        errors.weight = "El valor debe estar entre 1 y 500";
+    } 
+  }
+
+  if (input.speed) {
+    if (input.speed.trim() === "") {
+      errors.speed = "Se requiere la potencia del pokémon";
+    } else if (input.speed.match([0-9])) {
+      errors.speed = "El valor debe ser numerico";
+    } else if  (input.speed > 1000 || input.speed< 1 ) {
+        errors.speed = "El valor debe estar entre 1 y 500";
+    } 
+  }
+ 
+  if (input.height) {
+    if (input.height.trim() === "") {
+      errors.height = "Se requiere la potencia del pokémon";
+    } else if (input.height.match([0-9])) {
+      errors.height = "El valor debe ser numerico";
+    } else if  (input.height > 500 || input.height< 1 ) {
+        errors.height = "El valor debe estar entre 1 y 500";
+    } 
+  }
+ 
+  // if (input.types) {
+  //   if(input.types.length === 0 ){
+  //       errors.types = "Seleccione al menos un tipo para su nuevo pokémon"
+  //       console.log(input.types.length)
+  //   }
+  // }
+
+
+  
 
   return errors;
 }
@@ -45,8 +98,7 @@ export default function Creation() {
   const types = useSelector((state) => state.types);
 
   const pokemonsExistente = useSelector( state => state.pokemon)
-console.log(types)
-console.log(pokemonsExistente)
+  let navigate = useNavigate()
   // const history = useHistory()
 
   const [input, setInput] = useState({
@@ -77,15 +129,12 @@ console.log(pokemonsExistente)
   }, [dispatch]);
 
     function handleForm  (e)    {
-    // e.preventValue()
-     
-    
-      setInput({
+     e.preventDefault()
+     setInput({
       ...input,
-      [e.target.name]: e.target.value,
+      [e.target.name]: e.target.value.toLowerCase(),
     });
-    setErrors(
-      validated({
+    setErrors( validated({
         ...input,
         [e.target.name]: e.target.value,
       })
@@ -94,10 +143,16 @@ console.log(pokemonsExistente)
   }
 
   function handleSelect(e) {
+   
     setInput({
       ...input,
       types: [...input.types, e.target.value],
     });
+    setErrors(validated({
+      ...input, 
+      types: [...input.types, e.target.value]}));
+    console.log(input)
+    console.log(errors)
   }
 
   function handleDelete(t) {
@@ -105,38 +160,39 @@ console.log(pokemonsExistente)
       ...input,
       types: input.types.filter((ty) => ty !== t),
     });
-  }
+  };
 
   function handleSubmit(e) {
     e.preventDefault();
-    // console.log(input)
-    console.log(pokemonsExistente)
+    
     const nameRepit = pokemonsExistente.find(p => p.name === input.name )
-    console.log(input.name)
-    console.log(nameRepit)
-    console.log(pokemonsExistente[44].name)
+       
     if(nameRepit) {
       alert("El nombre ya existe");
       return
-    }else { 
+    } else if (input.types.length === 0){
+      alert("Seleccione al menos un tipo para su pokémon")
+     
+    }else {
+      
+      if(window.confirm("¿Estas seguro de crear a tu pokémon?" ) === true){
+        dispatch(postPokemones(input));
+        alert("Poke Creado");
+        setInput({
+          name: "",
+          hp: "",
+          attack: "",
+          defense: "",
+          speed: "",
+          height: "",
+          weight: "",
+          image: "",
+          types: [],
+        });
+       navigate("/home")
 
-   
-    
-    dispatch(postPokemones(input));
-    alert("Poke Creado");
-    setInput({
-      name: "",
-      hp: "",
-      attack: "",
-      defense: "",
-      speed: "",
-      height: "",
-      weight: "",
-      image: "",
-      types: [],
-    });
-    }
-   //  history.push("/home")
+      }
+   }
   }
 
   return (
@@ -146,12 +202,18 @@ console.log(pokemonsExistente)
       </Link>
 
 
-      <h3>Crea tu pokemon</h3>
-      <form onSubmit={(e) => handleSubmit(e)}>
+      <h3 className={styles.hola}>Crea tu pokemon</h3>
+      
+      <div className={styles.content}  >
+      
+      <form className={styles.form} onSubmit={(e) => handleSubmit(e)}>
 
-        <div>
-          <label>Nombre * </label>
+     
+
+        <div  >
+          <label className={styles.label}  >Nombre * </label>
           <input
+             className={errors?.name ? styles.errorInput : styles.input}
             onChange={(e) => handleForm(e)}
             type="text"
             value={input.name}
@@ -162,12 +224,14 @@ console.log(pokemonsExistente)
             required
           />
 
-          {errors.name && <p className="error">{errors.name} </p>}
+          {errors?.name &&  
+                 <p className={styles.errors}>{errors.name} </p> }
         </div>
 
         <div>
-          <label>Potencia * </label>
+          <label className={styles.label}>Potencia * </label>
           <input
+           className={errors?.hp ? styles.errorInput : styles.input}
             onChange={(e) => handleForm(e)}
             type="number"
             value={input.hp}
@@ -177,12 +241,14 @@ console.log(pokemonsExistente)
             min="1"
             max="500"
           />
-          {errors.hp && <p className="error">{errors.hp} </p>}
+          {errors?.hp &&  
+                 <p className={styles.errors}>{errors.hp} </p> }
         </div>
 
         <div>
-          <label>Ataque * </label>
+          <label className={styles.label}>Ataque * </label>
           <input
+           className={errors?.attack ? styles.errorInput : styles.input}
             onChange={(e) => handleForm(e)}
             type="number"
             value={input.attack}
@@ -192,12 +258,14 @@ console.log(pokemonsExistente)
             min="1"
             max="500"
           />
-          {errors.attack && <p className="error">{errors.attack} </p>}
+         {errors?.attack &&  
+                 <p className={styles.errors}>{errors.attack} </p> }
         </div>
 
         <div>
-          <label>Defensa * </label>
+          <label className={styles.label}>Defensa * </label>
           <input
+             className={errors?.defense ? styles.errorInput : styles.input}
             onChange={(e) => handleForm(e)}
             type="number"
             value={input.defense}
@@ -207,12 +275,14 @@ console.log(pokemonsExistente)
             min="1"
             max="500"
           />
-          {errors.defense && <p className="error">{errors.defense} </p>}
+           {errors?.defense &&  
+                 <p className={styles.errors}>{errors.defense} </p> }
         </div>
 
         <div>
-          <label>Velocidad * </label>
+          <label className={styles.label}>Velocidad * </label>
           <input
+           className={errors?.speed ? styles.errorInput : styles.input}
             onChange={(e) => handleForm(e)}
             type="number"
             value={input.speed}
@@ -222,12 +292,14 @@ console.log(pokemonsExistente)
             min="1"
             max="1000"
           />
-          {errors.speed && <p className="error">{errors.speed} </p>}
+              {errors?.speed &&  
+                 <p className={styles.errors}>{errors.speed} </p> }
         </div>
 
         <div>
-          <label>Altura * </label>
+          <label className={styles.label}>Altura * </label>
           <input
+            className={errors?.height ? styles.errorInput : styles.input}
             onChange={(e) => handleForm(e)}
             type="number"
             value={input.height}
@@ -237,12 +309,14 @@ console.log(pokemonsExistente)
             min="1"
             max="500"
           />
-          {errors.height && <p className="error">{errors.height} </p>}
+           {errors?.height &&  
+                 <p className={styles.errors}>{errors.height} </p> }
         </div>
 
         <div>
-          <label>Peso * </label>
+          <label className={styles.label}>Peso * </label>
           <input
+            className={errors?.weight ? styles.errorInput : styles.input}
             onChange={(e) => handleForm(e)}
             type="number"
             value={input.weight}
@@ -252,12 +326,14 @@ console.log(pokemonsExistente)
             min="1"
             max="1500"
           />
-          {errors.weight && <p className="error">{errors.weight} </p>}
+            {errors?.weight &&  
+                 <p className={styles.errors}>{errors.weight} </p> }
         </div>
        
         <div>
-          <label>Imagen</label>
+          <label className={styles.label}>Imagen</label>
           <input
+            className={styles.input}
             onChange={(e) => handleForm(e)}
             type="text"
             value={input.image}
@@ -268,34 +344,55 @@ console.log(pokemonsExistente)
         </div>
 
         <div>
-          <label>Tipo * </label>
-          <select  onChange={(e) => handleSelect(e)}>
-            <option>-----</option>
-            {types.map((t) => (
+          <label className={styles.label}>Tipo * </label>
+          <select 
+                  required  
+                  onChange={(e) => handleSelect(e)}
+                  className={errors?.types ? styles.errorInput : styles.input}
+                  name= "types">
+            <option disabled selected="selected"  >Seleccione al menos un tipo</option>   
+
+            {    
+              types.map((t) => (
               <option  value={t.name}>{t.name}</option>
-            ))}
-            {errors.types && <p className="error">{errors.types} </p>}
+            ))
+            }
+            
+           
           </select>
+
+          {   errors?.types &&  
+                 <p className={styles.errors}>{errors.types} </p> }
         </div>
+
+        { 
+        input.types.map((t) => (
+         
+        <div>
+          
+          <p>{t}</p>
+          <button type="button" onClick={() => handleDelete(t)}>X</button>
+        
+        </div>
+        )) 
+      }
+     
+
+          <h5 className={styles.label}>(*) Campos obligatorios</h5>
 
           {
 
-           !pokemonsExistente ? <button>Crear pokemon </button> :
-        <div>
-          <button type="submit">Crear pokemon</button>
-        </div>
-          }
+            !pokemonsExistente ? <button type="button">Crear pokemon</button> :
+                  <div>
+                        <button >Crear pokemon</button>
+                 </div>
+            }
 
-              
 
-        <h5>(*) Campos obligatorios</h5>
+
+       
       </form>
-      {input.types.map((t) => (
-        <div>
-          <p>{t}</p>
-          <button onClick={() => handleDelete(t)}>X</button>
-        </div>
-      ))}
+      </div>
     </>
   );
 }

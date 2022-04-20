@@ -1,14 +1,17 @@
 import React from "react";
 import { useState } from "react"
-import {searchPoke} from  "../redux/action"
-import { useDispatch } from "react-redux";
+import {searchPoke, getPokemones} from  "../redux/action"
+import { useDispatch, useSelector } from "react-redux";
 import { Nav } from "./Nav";
 
 
 export default function SearchBar() {
     const dispatch = useDispatch()
     const [search, setSearch] = useState("");
+
+    const allPokemones = useSelector(state=> state.pokemon)
     
+
 
     const handleSearch =(e)=>{
      e.preventDefault()
@@ -19,6 +22,9 @@ export default function SearchBar() {
  
  const onSubmit = (e )=>{
    e.preventDefault()
+
+   
+
     dispatch(searchPoke(search))
     setSearch("")
 }   

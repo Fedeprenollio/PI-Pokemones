@@ -1,12 +1,13 @@
 
-import { GET_POKEMONES, FILTER_TYPE, CREATED, SEARCH, ORDER_ALFAB, ORDER_BY_HP, POST_POKEMONES, GET_TYPES, GET_DETAIL } from "../action";
+import { GET_POKEMONES, FILTER_TYPE, CREATED, SEARCH, ORDER_ALFAB, ORDER_BY_HP, POST_POKEMONES, GET_TYPES, GET_DETAIL, DELETE_POKE } from "../action";
 
 
 let inicialState = {
     pokemon: [],
     allPokemonsForFilter: [],
     types: [],
-    detail: []
+    detail: [],
+    pokemonBD: []
 
 }
 
@@ -96,7 +97,8 @@ function rootReducer(state = inicialState, action) {
 
             return {
                 ...state,
-                pokemon: action.payload === "todos" ? state.allPokemonsForFilter : pokeFilter
+                pokemon: action.payload === "todos" ? state.allPokemonsForFilter : pokeFilter,
+              //  pokemonBD : allPokemons.filter(p => p.createInBD)
 
             };
 
@@ -110,11 +112,26 @@ function rootReducer(state = inicialState, action) {
                 ...state,
                 detail: action.payload
             }
+            //------extra redme
+        
+        case DELETE_POKE:
+            let allPokemons3 = state.allPokemonsForFilter
 
+            const pokeDeleteBD = allPokemons3.filter( p => p.id !== action.payload)
+            
+            
+        
+             return{
+                ...state,
+                pokemon: pokeDeleteBD
+            }
         default: return state
 
     }
 }
+
+
+
 
 
 

@@ -1,12 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import s from "./landingPage.module.css"
 
 export default function LandingPage() {
   return (
-    <div>
-      <h1>Pagina principal</h1>
+    <div className={s.content}>
+      <h1 className={s.h1}>Bienvenidos a la pokeApi</h1>
       <Link to="/home" >
-      <button>Ingresar</button>
+      <button className={s.btn} >Ingresar</button>
       
       </Link>     
 

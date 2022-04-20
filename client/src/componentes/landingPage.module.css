@@ -1,0 +1,25 @@
+.content {
+    background-image: url("../image/poke.jpg");
+    width: 100vw;
+    height: 100vh;
+   
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    overflow-x:auto;
+    background-position:center;
+
+}
+ .h1{
+     font-size: 30px;
+     color: beige;
+     border-color: bisque;
+     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+ }
+
+ .btn {
+     border-radius: 10px;
+     font-size: 18px;
+     font-weight: 1rem;
+ }
+    

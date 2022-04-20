@@ -10,6 +10,7 @@ export const CREATED = "CREATED";
 export const SEARCH = "SEARCH"
 export const FILTER_TYPE = "FILTER_TYPE";
 export const GET_DETAIL = "GET_DETAIL";
+export const DELETE_POKE = "DELETE_POKE"
 
 
 
@@ -81,12 +82,18 @@ export const filterByType = (payload) =>{
 export const searchPoke = (name) => {
     return async function (dispatch) {
 
-        let json = await axios(`http://localhost:3001/pokemons?name=${name}`)
-        return dispatch({
-            type: SEARCH,
-            payload: json.data
-        })
+        try {
+            let json = await axios(`http://localhost:3001/pokemons?name=${name}`)
+            return dispatch({
+                type: SEARCH,
+                payload: json.data
+            })
+    
+        } catch (error) {
+            console.log(error)
+        }
 
+       
     }
 };
 
@@ -102,7 +109,27 @@ return async function (dispatch){
     } catch (error) {
         console.log(error)
     }
-
-
 }    
+}
+
+
+
+//------EXTRA redme---
+
+export function deletePoke (id){
+    return async function (dispatch){
+        try {
+             await axios.delete(`http://localhost:3001/pokemons/${id}` )
+
+            return dispatch({
+                type: DELETE_POKE,
+                payload: id
+                
+            })
+        } catch (error) {
+            console.log(error)
+        }
+
+
+    }
 }

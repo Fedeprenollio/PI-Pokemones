@@ -4,11 +4,10 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import Card from "./Card";
-import Nav from "./Nav"
 import { getPokemones, createdInBd, orderByAlfab, orderByHp, getTypes, filterByType } from "../redux/action";
 import { Pagination } from "./Pagination";
 import SearchBar from "./SearchBar";
-import "./Home.css"
+import s from "./home.module.css"
 
 
 export default function Home() {
@@ -107,8 +106,8 @@ export default function Home() {
   }
     
   function handleRefresh (e){
-    e.preventDefault()
-      dispatch(getPokemones());
+    window.location.reload(false)
+     // dispatch(getPokemones());
     
   }
   
@@ -198,8 +197,6 @@ export default function Home() {
         
       </div>
 
-      
-
       { allPokemones.length>0 &&
         <div>
           <Link to={"/home/" + Math.ceil(Math.random()*(allPokemones.length)) } >
@@ -209,14 +206,7 @@ export default function Home() {
                 <h3>Pagina {currentPage} </h3>
 
         </div>
-
-
-      }
-      
-     
-   
-
-      
+      }    
 
       <Pagination pokemonsInPage={pokemonsInPage}
         allPokemones={allPokemones.length}
@@ -227,8 +217,6 @@ export default function Home() {
         paginadoLast={paginadoLast}
       />
 
-        
-
       <div>
         {currentPokes &&
           
@@ -236,7 +224,7 @@ export default function Home() {
            return (
              
               
-              <div className="cards">
+              <div className={s.cards}>
                <Link to={"/home/" + p.id}>
                  <Card types={p.types} createInBD={p.createInBD} name={p.name} image={p.image} />
                </Link>

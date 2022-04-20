@@ -2,7 +2,7 @@ const axios = require("axios");
 
 const {Pokemon, Type} = require('../db')
 
-const getPokemonApi = async  (req,res) =>{
+const getPokemonApi = async  (limit, offset) =>{
     // const URL = `https://pokeapi.co/api/v2/pokemon`
 
 
@@ -48,8 +48,8 @@ const getPokemonApi = async  (req,res) =>{
       
     //   res.send(fullData)
       //---------
-
-        const api = await  axios(`https://pokeapi.co/api/v2/pokemon?limit=40`);
+         limit = 40
+        const api = await  axios(`https://pokeapi.co/api/v2/pokemon?limit=${limit}`);
         // console.log(api.data.results)
         const infoApi = await api.data.results.map(p=> axios(p.url));
         const infoPoke = await axios.all(infoApi);
@@ -201,26 +201,44 @@ const downloadOfApiType = async ()=>{
 
 
 const getTipos = async (req,res) =>{
-    // const api = await axios.get(`https://pokeapi.co/api/v2/type`)
-    // const tiposApi = await api.data.results.map( t => t.name)
-
-    // tiposApi.forEach( t => {
-    //     Type.findOrCreate({
-    //         where: {
-    //             name:t
-    //         }
-    //     })
-    // })
-   
-    // const tiposAll = await Type.findAll();
-    // res.send(tiposAll)
-
-
+    
     await downloadOfApiType()
     const typesAll = await Type.findAll()
     res.status(200).send(typesAll)
 
 }
+
+const deletePoke = async (req,res, next) => {
+    
+    const {id} = req.params;
+    try {
+       // const newId = Number(id.split(/\D/g)[0]);
+        
+        const poke = await Pokemon.findByPk(id)
+
+        if(poke){
+            await poke.destroy()
+            res.send("Pokémon eliminado :( ")
+        }else {
+            res.status(404).send("Pokémon no encontrado")
+        }
+        
+
+    } catch (error) {
+        if(error.response){
+            res.status(error.response.status).send({msg: err.response.status})
+        }else if (error.request){
+            next(err.request)
+        }else{
+            next(error)
+        }
+    }
+
+
+
+} 
+
+
 
 
 module.exports={
@@ -230,6 +248,7 @@ module.exports={
     getPokemones,
     getPokemonId,
     postPokemon,
-    getTipos
+    getTipos,
+    deletePoke
     
 }

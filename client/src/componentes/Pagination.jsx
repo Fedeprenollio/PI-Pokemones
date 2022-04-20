@@ -1,5 +1,5 @@
 import React from "react";
-import "./Pagination.css"
+import s from "./pagination.module.css"
 
 export const Pagination = ({ pokemonsInPage, allPokemones, paginado, paginadoPrev, paginadoNext, paginadoFirs,paginadoLast }) => {
   // console.log(pokemonsInPage)
@@ -13,22 +13,22 @@ export const Pagination = ({ pokemonsInPage, allPokemones, paginado, paginadoPre
 
     
     allPokemones && 
-    <nav>
+    <nav className={s.pagination}>
       
-          <ul>
-          <button  onClick={() => paginadoFirs(1)}>Primero</button>
-          <button   onClick={() => paginadoPrev()}>Anterior</button>
+          <div>
+          <button  className={s.btn} onClick={() => paginadoFirs(1)}>Primero</button>
+          <button  className={s.btn} onClick={() => paginadoPrev()}>Anterior</button>
   
           { numPag &&
             numPag.map((num) => (
-              <li key={num}>
-                <button onClick={() => paginado(num)}>{num}</button>
-              </li>
+              
+                <button className={s.btn} onClick={() => paginado(num)}>{num}</button>
+              
             ))}
   
-          <button onClick={() => paginadoNext()}  >Siguiente</button>
-          <button onClick={() => paginadoLast()} >Ultimo</button>
-        </ul> 
+          <button  className={s.btn} onClick={() => paginadoNext()}  >Siguiente</button>
+          <button  className={s.btn} onClick={() => paginadoLast()} >Ultimo</button>
+        </div> 
      
 
             
