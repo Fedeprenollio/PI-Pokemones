@@ -55,7 +55,7 @@ const getPokemonApi = async  (limit, offset) =>{
         const infoPoke = await axios.all(infoApi);
            
         const pokemon = infoPoke.map(p=>p.data);
-        console.log(infoApi)
+        
         const pokeDetail=pokemon.map(p=>{
             return{
                 id: p.id,
@@ -111,26 +111,57 @@ const getPokemonesTotal = async()=>{
     
 }
 
+const getpokemonNameAPI = async(name)=>{
+const api = await axios(`https://pokeapi.co/api/v2/pokemon/${name}`)
+const p = await api.data
+return {
+    id: p.id,
+    name: p.name,
+    hp: p.stats[0].base_stat,
+    attack: p.stats[1].base_stat,
+    defense: p.stats[2].base_stat,
+    speed: p.stats[5].base_stat,
+    height: p.height,
+    weight: p.weight,
+    image: p.sprites.other["official-artwork"].front_default,           //home.front_shiny,   //["algo-medio"]
+    types: p.types.map(t=>t.type.name)
+}
+
+}
+
+
+
 const getPokemones = async (req,res) => {
     const {name} = req.query
     const pokemones = await getPokemonesTotal()
-
+    
+    // const pokemonApiName = 
+try {
     if(name) {
        
-        const pokeName = await pokemones.filter( p => p.name.toLowerCase() === name.toLowerCase()    );
+        const pokeName =  pokemones.filter( p => p.name.toLowerCase() === name.toLowerCase()    );
        
-            if(pokeName) {
+            if(pokeName.length>0) {
                 res.status(200).send(pokeName)
             }else {
-                res.status(404).send("El pokemon no existe")
+                const pokeNameApiArray = []
+                const pokeNameApi = await getpokemonNameAPI(name)
+                pokeNameApiArray.push(pokeNameApi)
+                res.status(200).send(pokeNameApiArray)
             }
+            // {
+               
+            //     res.status(404).send("El pokemon no existe")
+            // }
 
     } else{
         res.status(200).send(pokemones)
-    }
-   
-    
+    }    
+} catch (error) {
+    console.log(error)
 }
+    
+};
 
 
 const getPokemonId = async (req,res)=>{
@@ -138,15 +169,24 @@ const getPokemonId = async (req,res)=>{
         const pokemones = await getPokemonesTotal();
         
         try {
+            
             const selectPokemonId = await pokemones.find( (p)=>( p.id.toString() === idPokemon.toString()) );
-            res.status(200).send(selectPokemonId);
+            console.log(selectPokemonId)
+            if(selectPokemonId ){
+                res.status(200).send(selectPokemonId);
+
+            } else {
+                // const pokeNameApiArray = []
+                const pokeNameApi = await getpokemonNameAPI(idPokemon)
+                // pokeNameApiArray.push(pokeNameApi)
+                res.status(200).send(pokeNameApi)
+            }
+
             
         } catch (error) {
             res.status(404).send("Algo anda mal");
-            
-        }
-
-};
+           
+        }};
 
 
 const postPokemon = async (req,res) =>{
@@ -169,10 +209,6 @@ const postPokemon = async (req,res) =>{
             name: types } 
 
     }); 
-
-     
-      console.log(  tipoBD)
-
    await newPokemon.addType(tipoBD   )
     //
      //console.log(newPokemon)
@@ -195,10 +231,8 @@ const downloadOfApiType = async ()=>{
             }
         })
     })
-   
-        
-}
-
+          
+};
 
 const getTipos = async (req,res) =>{
     

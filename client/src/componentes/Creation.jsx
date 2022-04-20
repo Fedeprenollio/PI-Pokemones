@@ -18,7 +18,7 @@ function validated(input) {
       errors.name = "El nombre no puede tener mas de 11 letras";
     }
   }
-
+// console.log(input)
   if (input.hp) {
     if (input.hp.trim() === "") {
       errors.hp = "Se requiere la potencia del pokémon";

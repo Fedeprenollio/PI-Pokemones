@@ -15,6 +15,7 @@ export default function Home() {
   const dispatch = useDispatch();
 
   const allPokemones = useSelector((state) => state.pokemon);
+
   const types = useSelector(state => state.types)
   
 
@@ -29,8 +30,11 @@ export default function Home() {
   const indexOfLastPoke = currentPage * pokemonsInPage;
   const indexOfFirstPoke = indexOfLastPoke - pokemonsInPage;
 
+  
+    let currentPokes = allPokemones.slice(indexOfFirstPoke, indexOfLastPoke)  //pokemones en la pag actual
 
-  const currentPokes = allPokemones.slice(indexOfFirstPoke, indexOfLastPoke) //pokemones en la pag actual
+ 
+
 
   const paginado = (NumPag) => {
     setCurrentPage(NumPag)
@@ -106,8 +110,9 @@ export default function Home() {
   }
     
   function handleRefresh (e){
-    window.location.reload(false)
-     // dispatch(getPokemones());
+
+    //window.location.reload(false)
+      dispatch(getPokemones());
     
   }
   
@@ -118,7 +123,8 @@ export default function Home() {
     <>
       
       <SearchBar />
-      <button onClick={(e)=> handleRefresh(e)}>Recargar</button>
+
+     
 
 
       {/* <Link to="/home">
@@ -208,6 +214,15 @@ export default function Home() {
         </div>
       }    
 
+      {
+        (allPokemones.length=== 1) && 
+
+          <button onClick={(e)=> handleRefresh(e)}>Mostrar todos</button>
+        
+      }
+
+    { (allPokemones.length > 12) &&
+
       <Pagination pokemonsInPage={pokemonsInPage}
         allPokemones={allPokemones.length}
         paginado={paginado}
@@ -216,6 +231,9 @@ export default function Home() {
         paginadoFirs={paginadoFirs}
         paginadoLast={paginadoLast}
       />
+    }
+
+
 
       <div>
         {currentPokes &&

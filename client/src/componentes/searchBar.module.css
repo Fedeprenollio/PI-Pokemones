@@ -1,0 +1,36 @@
+.form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+     
+  }
+
+.input{
+    /* transition: all .2s ease-in-out;
+    display: flex;
+    flex-wrap: wrap;
+    position: relative ; */
+    border-radius:  6px;
+    border:0cm;
+    background-color: #f6efe7;
+    
+    
+  }
+  
+ 
+  .input:focus{
+  
+    background-color: rgb(246, 243, 211);
+  }
+  
+  
+  .errors {
+     
+      color: red;
+     
+    }
+   .errorInput {
+     background-color: rgb(241, 154, 154);
+      
+    }

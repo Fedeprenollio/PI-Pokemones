@@ -77,9 +77,7 @@ function rootReducer(state = inicialState, action) {
             let str = action.payload
 
             let pokeFilterAPI = action.payload === "all" ?  allPokemons2 :  allPokemons2.filter(  p=> p.types.includes( str)   )	
-            
-
-
+           
             const pokeFilterBD=allPokemons2.filter(p=>p.types)
             const pokeFilterTypeBD = pokeFilterBD.filter(p=>p.types.find(t=>t.name===action.payload))
 
@@ -103,6 +101,10 @@ function rootReducer(state = inicialState, action) {
             };
 
         case SEARCH:
+            // const pokeSearch = state.allPokemonsForFilter
+            // console.log(action.payload[0].name)
+            // const search = pokeSearch.filter( p=> p.name === action.payload.name)
+        
             return {
                 ...state,
                 pokemon: action.payload
