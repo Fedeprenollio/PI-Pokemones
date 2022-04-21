@@ -350,11 +350,11 @@ export default function Creation() {
                   onChange={(e) => handleSelect(e)}
                   className={errors?.types ? styles.errorInput : styles.input}
                   name= "types">
-            <option disabled selected="selected"  >Seleccione al menos un tipo</option>   
+            <option  disabled selected="selected"  >Seleccione al menos un tipo</option>   
 
             {    
-              types.map((t) => (
-              <option  value={t.name}>{t.name}</option>
+              types.map((t,i) => (
+              <option key={i}  value={t.name}>{t.name}</option>
             ))
             }
             
@@ -367,12 +367,13 @@ export default function Creation() {
 
         { 
         input.types.map((t) => (
-         
-        <div>
-          
-          <p>{t}</p>
-          <button type="button" onClick={() => handleDelete(t)}>X</button>
-        
+          <div className={styles.content_select}>
+              <p>{t}</p>
+              <button 
+                  className={styles.btn_close}
+                  type="button" 
+                  onClick={() => handleDelete(t)}>X</button>
+
         </div>
         )) 
       }
@@ -384,7 +385,7 @@ export default function Creation() {
 
             !pokemonsExistente ? <button type="button">Crear pokemon</button> :
                   <div>
-                        <button >Crear pokemon</button>
+                        <button className={styles.btn_crear}>Crear pokemon</button>
                  </div>
             }
 

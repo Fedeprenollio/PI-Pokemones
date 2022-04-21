@@ -33,10 +33,46 @@ width: 100%;
   position: relative 
 }
 
-.input:focus{
 
+.content_select{
+  display: flex;
+}
+
+.input:focus{
   background-color: rgb(246, 243, 211);
 }
+
+.btn_crear {
+  color: #445d7a;
+  background-color: #eee308;
+  border: #000;
+  border-radius: 10px;
+  height:30px;
+  font-size: 20px;
+  margin: 5px;
+  transition: step-start 
+}   
+.btn_crear:hover{ 
+  background-color: #a39b0d;
+  color: red;
+}
+
+
+.btn_close {
+  color: #445d7a;
+  background-color: #eee308;
+  border: #000;
+  border-radius: 10px;
+  height:20px;
+  font-size: 12px;
+  margin: 5px;
+  transition: step-start 
+}   
+.btn_close:hover{ 
+  background-color: #a39b0d;
+  color: red;
+}
+
 
 
 .errors {

@@ -14,14 +14,14 @@ export default  function  Card ({name, image, createInBD, types}){
             
                  <h2>{name}</h2>
             
-            <div>
+            <div >
             <img className="img" src={image} alt="pokemones" />
             </div>
           
                    <h3>Tipo:</h3>
                           {
 
-                    (createInBD===true) ? types.map( (t,i) =>  <h3 >{Object.values(types[i])} </h3>)   : types.map( (p)=> <h3>{p}</h3> )
+                    (createInBD===true) ? types.map( (t,i) =>  <h3 key={i}>{Object.values(types[i])} </h3>)   : types.map( (p,i)=> <h3 key={i}>{p}</h3> )
                     }
             
         </div>

@@ -7,8 +7,7 @@ import s from "./searchBar.module.css"
 
 function validated (search){
     let errors = {};
-    console.log(search.input)
-    console.log(errors)
+    
     if (search.input) {
         // if (search.trim() === "") {
         //   errors.search = "Se require un nombre";
@@ -20,7 +19,7 @@ function validated (search){
         } else if (search.input.length > 11) {
           errors.input = "El nombre no puede tener mas de 11 letras";
         }
-        console.log(errors.input)
+        
         return errors
       }
      
@@ -45,7 +44,7 @@ export default function SearchBar() {
      }
      
      
- const onSubmit = (e )=>{
+ const handleSubmit = (e )=>{
    e.preventDefault()
 
     dispatch(searchPoke(search))
@@ -57,7 +56,7 @@ export default function SearchBar() {
         <>
             <Nav/>
 
-            <form onSubmit={(e)=>onSubmit(e)} >
+            <form onSubmit={(e)=>handleSubmit(e)} >
 
                 <input 
                     className= {errors?.search ? s.errorInput : s.input}
@@ -72,8 +71,8 @@ export default function SearchBar() {
 
                    
                <button  
-                    onClick={(e)=> onSubmit(e)} 
-                    type="submit"> Buscar</button>
+                    onClick={(e)=> handleSubmit(e)} 
+                    type="submit">Buscar</button>
                 
             </form>
 

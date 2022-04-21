@@ -100,7 +100,7 @@ const getPokemonBD = async (req,res)=>{
 const getPokemonesTotal = async()=>{
     const pokemonesApi = await getPokemonApi();
     const pokemonesBD  = await getPokemonBD();
-
+console.log(getPokemonApi())
     // Promise.all([getPokemonApi()], [getPokemonBD()])
     //     .then([A.data.results , B]) = pokemonesTotales
 
@@ -131,7 +131,7 @@ return {
 
 
 
-const getPokemones = async (req,res) => {
+const getPokemones = async (req,res, next) => {
     const {name} = req.query
     const pokemones = await getPokemonesTotal()
     
@@ -158,7 +158,13 @@ try {
         res.status(200).send(pokemones)
     }    
 } catch (error) {
-    console.log(error)
+    if(error.response){
+        res.status(error.response.status).send({msg: err.response.status})
+    }else if (error.request){
+        next(err.request)
+    }else{
+        next(error)
+    }
 }
     
 };
@@ -171,7 +177,7 @@ const getPokemonId = async (req,res)=>{
         try {
             
             const selectPokemonId = await pokemones.find( (p)=>( p.id.toString() === idPokemon.toString()) );
-            console.log(selectPokemonId)
+            
             if(selectPokemonId ){
                 res.status(200).send(selectPokemonId);
 

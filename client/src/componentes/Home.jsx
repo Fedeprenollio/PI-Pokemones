@@ -238,13 +238,13 @@ export default function Home() {
       <div>
         {currentPokes &&
           
-          currentPokes.map((p) => {
+          currentPokes.map((p,a) => {
            return (
              
               
-              <div className={s.cards}>
+              <div key={a} className={s.cards}>
                <Link to={"/home/" + p.id}>
-                 <Card types={p.types} createInBD={p.createInBD} name={p.name} image={p.image} />
+                 <Card key={p.id} types={p.types} createInBD={p.createInBD} name={p.name} image={p.image} />
                </Link>
               </div>
               

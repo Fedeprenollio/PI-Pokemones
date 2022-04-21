@@ -22,7 +22,7 @@ export const Pagination = ({ pokemonsInPage, allPokemones, paginado, paginadoPre
           { numPag &&
             numPag.map((num) => (
               
-                <button className={s.btn} onClick={() => paginado(num)}>{num}</button>
+                <button key={num} className={s.btn} onClick={() => paginado(num)}>{num}</button>
               
             ))}
   
