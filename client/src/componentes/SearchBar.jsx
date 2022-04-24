@@ -27,12 +27,14 @@ function validated (search){
 
 export default function SearchBar() {
     const dispatch = useDispatch()
+
     const [search, setSearch] = useState("");
     const [errors, setErrors] = useState({});
 
 
     const handleSearch =(e)=>{
         e.preventDefault()
+      
         setSearch(e.target.value.toLowerCase())
        // console.log(e.target.value)
         setErrors( validated({
@@ -44,10 +46,13 @@ export default function SearchBar() {
      }
      
      
- const handleSubmit = (e )=>{
+ const handleSubmit =  (e )=>{
+
+
    e.preventDefault()
 
     dispatch(searchPoke(search))
+    
     setSearch("")
 }   
 

@@ -6,6 +6,7 @@ import Home from "./componentes/Home";
 //import { Nav } from "./componentes/Nav";
 import Creation from "./componentes/Creation"
 import { Detail } from "./componentes/Detail";
+import {UpdatePoke} from "./componentes/UpdatePoke"
 //import { Delete } from "./componentes/Delete";
 
 // const Layout = () => <h1>Probando</h1>
@@ -21,7 +22,7 @@ function App() {
           <Route path ="/home" element={<Home/>} /> 
           <Route path ="/home/:id" element={<Detail/>} /> 
           <Route path ="/created" element={<Creation/>} /> 
-          {/* <Route path ="/delete/" element={<Delete/>} /> */}
+          <Route path ="/update/:id" element={<UpdatePoke/>} />
 
 
           <Route path="*" element={<h1>404 not found</h1>}></Route>

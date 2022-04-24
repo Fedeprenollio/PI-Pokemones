@@ -6,47 +6,25 @@ const getPokemonApi = async  (limit, offset) =>{
     // const URL = `https://pokeapi.co/api/v2/pokemon`
 
 
-    // const result =  await Promise.all(
-    //     data.map(async (id) => {
+    // const result =  await Promise.all( data.map(async (id) => {
     //       let response = await axios.get(id.url)
     //       const todo = await response.data
     //       id = {...todo}
     //       return id
-    //     }),
+    //     }
+    //     ),
 
-    //----------------------
-    // const getPokemons = async () => {
-    //     const response = await axios.get(
-    //       "https://pokeapi.co/api/v2/pokemon?limit=20"
-    //     );
-    //     console.log(response)
-    //     return response;
+    // var filenames = [1, 2, 3, 4, 5, 6,7,8 ].map(function (n) {
+    //     return `https://pokeapi.co/api/v2/pokemon/${n}`;
+    //   });    
+    //   const sinOrden = await Promise.all(filenames.map(p => promisifiedReadFile(p)));
 
-    //   };
+    //   for ( let r of sinOrden) {
+    //     blue(r);
+    
+    //   }
+    
 
-    //   const rest = await getPokemons();
-    //   const names = rest.data?.results.map((item) => item.name);
-
-    //   const fullData = await Promise.all(
-    //     names.map(async (name) => {
-    //       const info = await axios(
-    //         `https://pokeapi.co/api/v2/pokemon/${name}`
-    //       );
-
-    //       return {
-    //         name: info.data.name,
-    //         img: `https://play.pokemonshowdown.com/sprites/xyani/${info.data.name}.gif`,
-    //         tipos: info.data.types.map((type) => type.type.name),
-    //         hp: info.data.stats[0].base_stat,
-    //         attack: info.data.stats[1].base_stat,
-    //         defense: info.data.stats[2].base_stat,
-    //         speed: info.data.stats[5].base_stat,
-    //         id: info.data.id
-    //       };
-    //     })
-    //   );
-      
-    //   res.send(fullData)
       //---------
          limit = 40
         const api = await  axios(`https://pokeapi.co/api/v2/pokemon?limit=${limit}`);
@@ -77,30 +55,23 @@ const getPokemonApi = async  (limit, offset) =>{
 
 }
 
-const getPokemonBD = async (req,res)=>{
+const getPokemonBD = async  ()=>{
 
     const pokemonesBD = await Pokemon.findAll({
-         
-       // raw: true,
-        
-        include: 
+         include: 
         {          
             model: Type,
             attributes: ['name'],
             through: { attributes: [] }
          } 
     })
-
-//     console.log(pokemonesBD)
-// //console.log(pokemonesBD)
-//     res.send(pokemonesBD)
     return pokemonesBD;
 } 
 
 const getPokemonesTotal = async()=>{
     const pokemonesApi = await getPokemonApi();
     const pokemonesBD  = await getPokemonBD();
-console.log(getPokemonApi())
+
     // Promise.all([getPokemonApi()], [getPokemonBD()])
     //     .then([A.data.results , B]) = pokemonesTotales
 
@@ -109,7 +80,8 @@ console.log(getPokemonApi())
 
     return pokemonesTotales;
     
-}
+    
+};
 
 const getpokemonNameAPI = async(name)=>{
 const api = await axios(`https://pokeapi.co/api/v2/pokemon/${name}`)
@@ -139,7 +111,8 @@ const getPokemones = async (req,res, next) => {
 try {
     if(name) {
        
-        const pokeName =  pokemones.filter( p => p.name.toLowerCase() === name.toLowerCase()    );
+        try {
+            const pokeName =  pokemones.filter( p => p.name.toLowerCase() === name.toLowerCase()    );
        
             if(pokeName.length>0) {
                 res.status(200).send(pokeName)
@@ -149,6 +122,16 @@ try {
                 pokeNameApiArray.push(pokeNameApi)
                 res.status(200).send(pokeNameApiArray)
             }
+        } catch (error) {
+            if(error.response){
+                res.status(error.response.status).send({msg: err.response.status})
+            }else if (error.request){
+                next(err.request)
+            }else{
+                next(error)
+            }
+        }
+       
             // {
                
             //     res.status(404).send("El pokemon no existe")
@@ -172,7 +155,7 @@ try {
 
 const getPokemonId = async (req,res)=>{
         const {idPokemon} = req.params;
-        const pokemones = await getPokemonesTotal();
+        const pokemones = await getPokemonBD();
         
         try {
             
@@ -195,35 +178,30 @@ const getPokemonId = async (req,res)=>{
         }};
 
 
-const postPokemon = async (req,res) =>{
-    
-
+const postPokemon = async (req,res, next) =>{
     const {name, hp, attack, defense, speed, height, weight, image , createInBD, types} = req.body;
-   
-    //como para obtengo todos los tipos de antemano?
-        
+           
     try {
-      
         const newPokemon =  await Pokemon.create({ name, hp, attack, defense, speed, height, weight, createInBD , image})  ;
         
-
+        //PROBANDO SI ES NECESARIO OBTENER LOS TIPOS
    await downloadOfApiType()
-
        const tipoBD = await Type.findAll({
-           
-        where:{ 
-            name: types } 
-
+           where:{ 
+                name: types } 
     }); 
-   await newPokemon.addType(tipoBD   )
-    //
-     //console.log(newPokemon)
-    res.send("newPokemon listo")
-} catch (error) {
-    res.send("error al crear")
-}
+       await newPokemon.addType(tipoBD   )
+       res.send("newPokemon creato correctamente")
 
-};
+} catch (error) {
+    if(error.response){
+        res.status(error.response.status).send({msg: err.response.status})
+    }else if (error.request){
+        next(err.request)
+    }else{
+        next(error)
+    }
+}};
 
 const downloadOfApiType = async ()=>{
     const api = await axios.get(`https://pokeapi.co/api/v2/type`)
@@ -241,19 +219,32 @@ const downloadOfApiType = async ()=>{
 };
 
 const getTipos = async (req,res) =>{
-    
-    await downloadOfApiType()
-    const typesAll = await Type.findAll()
-    res.status(200).send(typesAll)
+   try {
+            await downloadOfApiType()
+            const typesAll = await Type.findAll()
+            res.status(200).send(typesAll)
+   } catch (error) {
+            if(error.response){
+                res.status(error.response.status).send({msg: err.response.status})
+            }else if (error.request){
+                next(err.request)
+            }else{
+                next(error)
+            }
+       
+   } 
+  
 
 }
+
+//-----EXTRAS----
+
 
 const deletePoke = async (req,res, next) => {
     
     const {id} = req.params;
     try {
-       // const newId = Number(id.split(/\D/g)[0]);
-        
+               
         const poke = await Pokemon.findByPk(id)
 
         if(poke){
@@ -279,6 +270,61 @@ const deletePoke = async (req,res, next) => {
 } 
 
 
+const putPoke = async (req, res, next) =>{
+
+    const {id} = req.params;
+    try {
+       
+        
+        const poke = await Pokemon.findByPk(id)
+
+        if(poke){
+          
+            const {
+                name,
+                hp,
+                attack,
+                defense,
+                speed,
+                img,
+                types,
+              } = req.body;
+
+            await poke.update({
+                name,
+                hp,
+                attack,
+                defense,
+                speed,
+                img,
+                
+            })
+
+          let type =   await Type.findAll({
+                where:{ 
+                     name: types } 
+         }); 
+
+        await poke.setTypes(type)
+
+            res.send("Pokémon modificado :D ")
+        }else {
+            res.status(404).send("Pokémon no encontrado")
+        }
+        
+
+    } catch (error) {
+        if(error.response){
+            res.status(error.response.status).send({msg: err.response.status})
+        }else if (error.request){
+            next(err.request)
+        }else{
+            next(error)
+        }
+    }
+
+}
+
 
 
 module.exports={
@@ -289,6 +335,7 @@ module.exports={
     getPokemonId,
     postPokemon,
     getTipos,
-    deletePoke
+    deletePoke,
+    putPoke
     
 }

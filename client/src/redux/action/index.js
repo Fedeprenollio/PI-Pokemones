@@ -10,38 +10,60 @@ export const CREATED = "CREATED";
 export const SEARCH = "SEARCH"
 export const FILTER_TYPE = "FILTER_TYPE";
 export const GET_DETAIL = "GET_DETAIL";
-export const DELETE_POKE = "DELETE_POKE"
+export const DELETE_POKE = "DELETE_POKE";
+export const UPDATE_POKE = "UPDATE_POKE"
 
 
 
 export const getPokemones = () => {
 //hacer trycath
     return async function (dispatch) {
+
+       try {
         let json = await axios(`http://localhost:3001/pokemons/`);
         return dispatch({
             type: GET_POKEMONES,
             payload: json.data
         })
-    }};
+       } catch (error) {
+           
+        alert("Pokémon no encontrado")
+       } 
+       
+       
+    }
+};
 
 export const getTypes = ()=>{
     return async function (dispatch) {
+try {
+    let json = await axios(`http://localhost:3001/types/`)
 
-        let json = await axios(`http://localhost:3001/types/`)
-
-        return dispatch({
-            type: GET_TYPES,
-            payload: json.data
-        })
+    return dispatch({
+        type: GET_TYPES,
+        payload: json.data
+    })
+} catch (error) {
+    console.log(error)
+}
+       
     }
 
 }
      
 export const postPokemones = (payload)=>{
         return async function (dispatch){
-            let json = await axios.post(`http://localhost:3001/pokemons/`, payload)
+try {
+        
+    let json = await axios.post(`http://localhost:3001/pokemons/`, payload)
 
-            return json
+    return json
+} catch (error) {
+    console.log(error)
+}
+
+
+          
         }
 
 }
@@ -56,25 +78,39 @@ export const orderByAlfab = (payload) => {
     }}
 
  export const orderByHp = (payload)  =>{
+     try {
+         
      return {
-         type: ORDER_BY_HP,
-         payload
+        type: ORDER_BY_HP,
+        payload
+    }
+     } catch (error) {
+     console.log(error)    
      }
  }  
 
 
 export const createdInBd = (payload) => {
-
+try {
     return {
         type: CREATED,
         payload
     }
+} catch (error) {
+    console.log(error)
+}
+ 
 };
 
 export const filterByType = (payload) =>{
-    return {
-        type: FILTER_TYPE,
-        payload
+    
+    try {
+        return {
+            type: FILTER_TYPE,
+            payload
+        }
+    } catch (error) {
+        console.log(error)
     }
 
 };
@@ -90,7 +126,8 @@ export const searchPoke = (name) => {
             })
     
         } catch (error) {
-            console.log(error)
+           
+           alert("El pokémon no existe")
         }
 
        
@@ -129,7 +166,21 @@ export function deletePoke (id){
         } catch (error) {
             console.log(error)
         }
+    }
+};
 
+export function updatePoke (id){
+    return async function (dispatch){
+        try {
+             await axios.put(`http://localhost:3001/pokemons/${id}` )
 
+            return dispatch({
+                type: UPDATE_POKE,
+                payload: id
+                
+            })
+        } catch (error) {
+            console.log(error)
+        }
     }
 }

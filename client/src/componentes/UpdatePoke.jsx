@@ -1,108 +1,108 @@
 import { React, useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { postPokemones, getTypes, getPokemones } from "../redux/action";
+import { postPokemones, getTypes, getPokemones, updatePoke } from "../redux/action";
 
-import { Link, useNavigate  } from "react-router-dom";
-import styles from "./creation.module.css"
-import { Nav } from "./Nav";
+import { Link, useNavigate, useParams  } from "react-router-dom";
+import styles from "../componentes/update.module.css"
 
 function validated(input) {
-  let errors = {};
-  if (input.name) {
-    if (input.name.trim() === "") {
-      errors.name = "Se require un nombre";
-    } else if (input.name.match(/[^a-zA-Z]/)) {
-      errors.name = "El nombre debe ser alfabetico,sin signos ni espacios";
-    } else if (input.name.length < 1) {
-      errors.name = "El nombre debe contener mas de una letra";
-    } else if (input.name.length > 11) {
-      errors.name = "El nombre no puede tener mas de 11 letras";
+    let errors = {};
+    if (input.name) {
+      if (input.name.trim() === "") {
+        errors.name = "Se require un nombre";
+      } else if (input.name.match(/[^a-zA-Z]/)) {
+        errors.name = "El nombre debe ser alfabetico,sin signos ni espacios";
+      } else if (input.name.length < 1) {
+        errors.name = "El nombre debe contener mas de una letra";
+      } else if (input.name.length > 11) {
+        errors.name = "El nombre no puede tener mas de 11 letras";
+      }
     }
-  }
-// console.log(input)
-  if (input.hp) {
-    if (input.hp.trim() === "") {
-      errors.hp = "Se requiere la potencia del pokémon";
-    } else if (isNaN(input.hp)) {
-      errors.hp = "El valor debe ser numerico";
-    } else if  (input.hp > 500 || input.hp< 1 ) {
-        errors.hp = "El valor debe estar entre 1 y 500";
-    } 
-  }
-
-  if (input.attack) {
-    if (input.attack.trim() === "") {
-      errors.attack = "Se requiere la potencia del pokémon";
-    } else if (input.attack.match([0-9])) {
-      errors.attack = "El valor debe ser numerico";
-    } else if  (input.attack > 500 || input.attack< 1 ) {
-        errors.attack = "El valor debe estar entre 1 y 500";
-    } 
-  }
-
-  if (input.defense) {
-    if (input.defense.trim() === "") {
-      errors.defense = "Se requiere la potencia del pokémon";
-    } else if (input.defense.match([0-9])) {
-      errors.defense = "El valor debe ser numerico";
-    } else if  (input.defense > 500 || input.defense< 1 ) {
-        errors.defense = "El valor debe estar entre 1 y 500";
-    } 
-  }
-
-
-  if (input.weight) {
-    if (input.weight.trim() === "") {
-      errors.weight = "Se requiere la potencia del pokémon";
-    } else if (input.weight.match([0-9])) {
-      errors.weight = "El valor debe ser numerico";
-    } else if  (input.weight > 500 || input.weight< 1 ) {
-        errors.weight = "El valor debe estar entre 1 y 500";
-    } 
-  }
-
-  if (input.speed) {
-    if (input.speed.trim() === "") {
-      errors.speed = "Se requiere la potencia del pokémon";
-    } else if (input.speed.match([0-9])) {
-      errors.speed = "El valor debe ser numerico";
-    } else if  (input.speed > 1000 || input.speed< 1 ) {
-        errors.speed = "El valor debe estar entre 1 y 500";
-    } 
-  }
- 
-  if (input.height) {
-    if (input.height.trim() === "") {
-      errors.height = "Se requiere la potencia del pokémon";
-    } else if (input.height.match([0-9])) {
-      errors.height = "El valor debe ser numerico";
-    } else if  (input.height > 500 || input.height< 1 ) {
-        errors.height = "El valor debe estar entre 1 y 500";
-    } 
-  }
- 
-  // if (input.types) {
-  //   if(input.types.length === 0 ){
-  //       errors.types = "Seleccione al menos un tipo para su nuevo pokémon"
-  //       console.log(input.types.length)
-  //   }
-  // }
-
-
+  // console.log(input)
+    if (input.hp) {
+      if (input.hp.trim() === "") {
+        errors.hp = "Se requiere la potencia del pokémon";
+      } else if (isNaN(input.hp)) {
+        errors.hp = "El valor debe ser numerico";
+      } else if  (input.hp > 500 || input.hp< 1 ) {
+          errors.hp = "El valor debe estar entre 1 y 500";
+      } 
+    }
   
-
-  return errors;
-}
-
-export default function Creation() {
-  const dispatch = useDispatch();
-  let navigate = useNavigate()
-
-  const types = useSelector((state) => state.types);
-  const pokemonsExistente = useSelector( state => state.pokemon)
+    if (input.attack) {
+      if (input.attack.trim() === "") {
+        errors.attack = "Se requiere la potencia del pokémon";
+      } else if (input.attack.match([0-9])) {
+        errors.attack = "El valor debe ser numerico";
+      } else if  (input.attack > 500 || input.attack< 1 ) {
+          errors.attack = "El valor debe estar entre 1 y 500";
+      } 
+    }
   
+    if (input.defense) {
+      if (input.defense.trim() === "") {
+        errors.defense = "Se requiere la potencia del pokémon";
+      } else if (input.defense.match([0-9])) {
+        errors.defense = "El valor debe ser numerico";
+      } else if  (input.defense > 500 || input.defense< 1 ) {
+          errors.defense = "El valor debe estar entre 1 y 500";
+      } 
+    }
+  
+  
+    if (input.weight) {
+      if (input.weight.trim() === "") {
+        errors.weight = "Se requiere la potencia del pokémon";
+      } else if (input.weight.match([0-9])) {
+        errors.weight = "El valor debe ser numerico";
+      } else if  (input.weight > 500 || input.weight< 1 ) {
+          errors.weight = "El valor debe estar entre 1 y 500";
+      } 
+    }
+  
+    if (input.speed) {
+      if (input.speed.trim() === "") {
+        errors.speed = "Se requiere la potencia del pokémon";
+      } else if (input.speed.match([0-9])) {
+        errors.speed = "El valor debe ser numerico";
+      } else if  (input.speed > 1000 || input.speed< 1 ) {
+          errors.speed = "El valor debe estar entre 1 y 500";
+      } 
+    }
+   
+    if (input.height) {
+      if (input.height.trim() === "") {
+        errors.height = "Se requiere la potencia del pokémon";
+      } else if (input.height.match([0-9])) {
+        errors.height = "El valor debe ser numerico";
+      } else if  (input.height > 500 || input.height< 1 ) {
+          errors.height = "El valor debe estar entre 1 y 500";
+      } 
+    }
+   
+    // if (input.types) {
+    //   if(input.types.length === 0 ){
+    //       errors.types = "Seleccione al menos un tipo para su nuevo pokémon"
+    //       console.log(input.types.length)
+    //   }
+    // }
+  
+  
+    
+  
+    return errors;
+  }
 
-  const [input, setInput] = useState({
+
+export const UpdatePoke = () => {
+    const dispatch = useDispatch();
+    let navigate = useNavigate()
+    let {id} = useParams()
+
+    const types = useSelector((state) => state.types);
+    const pokemonsExistente = useSelector((state) => state.pokes)
+    const updateToPoke = useSelector(state=> state.detail)
+    const  [input, setInput ] = useState({
     name: "",
     hp: "",
     attack: "",
@@ -112,74 +112,79 @@ export default function Creation() {
     weight: "",
     image: "",
     types: [],
-  });
+    })
 
-  const [errors, setErrors] = useState({});
+    const [errors, setErrors] = useState({});
+
+
+
+
+      useEffect( ()=>{
+    if(updateToPoke){
+        
+        setInput({
+          name: updateToPoke.name,
+          hp: updateToPoke.hp,
+          attack: updateToPoke.attack,
+          defense: updateToPoke.defense,
+          speed: updateToPoke.speed,
+          height: updateToPoke.height,
+          weight: updateToPoke.weight,
+          img: updateToPoke.img,
+          types: updateToPoke.types,
+        })
+    }
+    
+  })
+
+
+
+
+
+
+  function handleForm(e){
+    e.preventDefault()
+    setInput({
+     ...input,
+     [e.target.name]: e.target.value.toLowerCase(),
+   });
+
+   setErrors( validated({
+    ...input,
+    [e.target.name]: e.target.value,
+  })
+);
+}
   
 
-  // useEffect(() => {
-  //   dispatch(getTypes());
-  // }, [dispatch]);
- 
-  // useEffect(() => {
-  //   dispatch(getPokemones());
-  // }, [dispatch]);
+  function handleSelect(e){
+    setInput({
+        ...input,
+        types: [...input.types, e.target.value],
+      });
 
-
-
-
-    function handleForm  (e)    {
-     e.preventDefault()
-     setInput({
-      ...input,
-      [e.target.name]: e.target.value.toLowerCase(),
-    });
-    setErrors( validated({
+      setErrors( validated({
         ...input,
         [e.target.name]: e.target.value,
       })
     );
-    
-  }
-
-  function handleSelect(e) {
-    if(!input.types.includes(e.target.value)) {
-
-      setInput({
-        ...input,
-        types: [...input.types, e.target.value],
-      });
-      setErrors(validated({
-        ...input, 
-        types: [...input.types, e.target.value]}));
-    }
-  }
- 
-    
-  
-
-  function handleDelete(t) {
-    setInput({
-      ...input,
-      types: input.types.filter((ty) => ty !== t),
-    });
-  };
-
-  function handleSubmit(e) {
+     
       
+  }
+    
+
+  function handleDelete(){
+      
+  }
+
+
+  function handleSubmit(e){
     e.preventDefault();
     
-    const nameRepit = pokemonsExistente.find(p => p.name === input.name )
-       
-    if(nameRepit) {
-      alert("El nombre ya existe");
-      return
-    } else if (input.types.length === 0){
-      alert("Seleccione al menos un tipo para su pokémon")
-    } else {
+    
       
       if(window.confirm("¿Estas seguro de crear a tu pokémon?" ) === true){
-        dispatch(postPokemones(input));
+        dispatch(updatePoke(input));
         alert("Poke Creado");
         setInput({
           name: "",
@@ -195,16 +200,15 @@ export default function Creation() {
        navigate("/home")
 
       }
-   }
-  }
-
-  return (
+   
+      
+}
+  
+return (
     <>
-    <Nav/>
-
-      {/* <Link to="/home">
+      <Link to="/home">
       <button>Home</button>
-      </Link> */}
+      </Link>
 
 
       <h3 className={styles.hola}>Crea tu pokemon</h3>
@@ -371,9 +375,9 @@ export default function Creation() {
         </div>
 
         { 
-        input.types.map((t) => (
+        input.types?.map((t) => (
           <div className={styles.content_select}>
-              <p className={styles.addType}>{t}</p>
+              <p>{t}</p>
               <button 
                   className={styles.btn_close}
                   type="button" 
@@ -391,7 +395,7 @@ export default function Creation() {
             // !pokemonsExistente  ? <button type="button">Crear pokemon</button> :
             errors?.name ||errors?.hp ||errors?.attack  ||errors?.defense ||errors?.speed ||errors?.height ||errors?.weight  ? <button type="button">Crear pokemon</button> :
                   <div>
-                        <button className={styles.btn_crear}>Crear pokemon</button>
+                        <button className={styles.btn_crear}>Modifica tu pokémon</button>
                  </div>
             }
 
@@ -402,4 +406,6 @@ export default function Creation() {
       </div>
     </>
   );
+
+ 
 }

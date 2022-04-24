@@ -1,8 +1,17 @@
-
 .content {
-  /* display: flex; */
-  margin: 0%;
+  background-image: url("../image/amarillo.jpg");
+  width: auto;
+  height: 100vh;
+ 
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  overflow-x:auto;
+  background-position:bottom;
+
 }
+
+
 
 .form{
   display: flex;
@@ -12,17 +21,7 @@
    
 }
 
-.input{
-  transition: all .2s ease-in-out;
-  display: flex;
-  flex-wrap: wrap;
-  position: relative ;
-  border-radius:  6px;
-  border:0cm;
-  background-color: #f6efe7;
-  
-  
-}
+
 
 .label{
 color: rgb(19, 28, 28);
@@ -36,6 +35,21 @@ width: 100%;
 
 .content_select{
   display: flex;
+}
+
+.input{
+  transition: all .4s ease-in-out;
+  display: flex;
+  flex-wrap: wrap;
+  position: relative ;
+  border-radius:  6px;
+  border:0cm;
+  background-color: #f6efe7;
+  width: 300px;
+  height: 30px;
+  font-size: 20px;
+  
+  
 }
 
 .input:focus{
@@ -82,5 +96,25 @@ width: 100%;
   }
  .errorInput {
    background-color: rgb(241, 154, 154);
+   transition: all .4s ease-in-out;
+   display: flex;
+   flex-wrap: wrap;
+   position: relative ;
+   border-radius:  6px;
+   border:0cm;
+  
+   width: 300px;
+   height: 30px;
+   font-size: 20px;
+    
+  }
+  .errorInput:focus{
+    background-color: rgb(193, 110, 78);
+    
+  }
+
+  .addType{
+    background-color: coral;
+    border-radius: 5px;
     
   }

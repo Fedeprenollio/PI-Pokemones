@@ -1,7 +1,84 @@
-.cards{
-    display: inline-block;
-    flex-wrap: wrap;
-    justify-content: center;
-    width:300px;
-    overflow:hidden;
+
+.container_main{
+    background: url("../image/acuarela.jpg")  ;
+    width: auto;
+    height: 100vh;
+   
+    width: auto;
+    height: 100vh;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    overflow-x: auto;
+    background-position: bottom;
+  
 }
+
+
+.conteiner{
+    display: inline-flex;
+}
+
+.conteiner_filter{
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+
+}
+
+.conteiner_order{
+    display: flex;
+    justify-content: end;
+    align-items: flex-start;
+}
+
+
+.label{
+    color: rgb(19, 28, 28);
+    width: 100%;
+      margin-top: 0.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      position: relative 
+    }
+    
+
+.cards{
+  
+    display: inline-block;
+    width: 300px;
+    height: 400px;
+    background-color: rgba(222, 192, 192, 0.6);
+    border-radius: 10px;
+    outline: 1px solid rgb(255, 255, 255, 0.5);
+    outline-offset: -8px;
+    box-shadow: 3px 3px 10px rgb(0, 0, 0. -1);
+    position: relative;
+    overflow: hidden;    
+    margin: 10px;
+    text-decoration: none;
+
+}
+ .cards:hover{
+     transform: scale(1.15);
+ }
+
+
+ .select{
+    background-color: rgb(241, 154, 154);
+    transition: all .4s ease-in-out;
+    display: flex;
+    flex-wrap: wrap;
+    position: relative ;
+    border-radius:  6px;
+    border:0cm;
+   
+    width: auto;
+    height: 30px;
+    font-size: 20px;
+   
+ }
+
+ /* .link{
+
+ } */

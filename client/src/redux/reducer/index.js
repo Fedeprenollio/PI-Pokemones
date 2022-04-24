@@ -1,5 +1,5 @@
 
-import { GET_POKEMONES, FILTER_TYPE, CREATED, SEARCH, ORDER_ALFAB, ORDER_BY_HP, POST_POKEMONES, GET_TYPES, GET_DETAIL, DELETE_POKE } from "../action";
+import { GET_POKEMONES, FILTER_TYPE, CREATED, SEARCH, ORDER_ALFAB, ORDER_BY_HP, POST_POKEMONES, GET_TYPES, GET_DETAIL, DELETE_POKE, UPDATE_POKE } from "../action";
 
 
 let inicialState = {
@@ -7,7 +7,8 @@ let inicialState = {
     allPokemonsForFilter: [],
     types: [],
     detail: [],
-    pokemonBD: []
+    pokemonBD: [],
+    pokemonUpdate: []
 
 }
 
@@ -113,19 +114,27 @@ function rootReducer(state = inicialState, action) {
             return{
                 ...state,
                 detail: action.payload
-            }
+            };
             //------extra redme
         
         case DELETE_POKE:
             let allPokemons3 = state.allPokemonsForFilter
 
             const pokeDeleteBD = allPokemons3.filter( p => p.id !== action.payload)
-            
-            
-        
-             return{
+            return{
                 ...state,
                 pokemon: pokeDeleteBD
+            };
+
+        case UPDATE_POKE:
+            console.log(action.payload)
+
+
+
+
+            return{
+                ...state,
+                pokemon : action.payload
             }
         default: return state
 

@@ -9,6 +9,9 @@ export const Pagination = ({ pokemonsInPage, allPokemones, paginado, paginadoPre
     numPag.push(i);
   }
 
+
+  
+
   return (
 
     

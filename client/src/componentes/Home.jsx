@@ -35,10 +35,9 @@ export default function Home() {
 
  
 
-
   const paginado = (NumPag) => {
-    setCurrentPage(NumPag)
-
+    
+      setCurrentPage(NumPag)
   }
 
   const paginadoPrev = (NumPag) => {
@@ -106,6 +105,7 @@ export default function Home() {
     //   ...click,
      
     dispatch(filterByType(e.target.value))
+    setCurrentPage(1)
       
   }
     
@@ -120,9 +120,10 @@ export default function Home() {
 
 
   return (
-    <>
-      
-      <SearchBar />
+   
+     <div className={s.container_main}>
+       
+      <SearchBar  />
 
      
 
@@ -131,24 +132,29 @@ export default function Home() {
           <button>Cargar de nuevo los pokemones</button>
         
         </Link> */}
-      <div>
-        Ordenar alfabeticamente
-        <select onChange={(e) => handleOrderByAlfabeto(e)} name="Ordenar de forma..." id="">
-          <option value="q" >---</option>
-          <option value="asc">A-Z</option>
-          <option value="des">Z-A</option>
-        </select>
-      </div>
 
-      <div>
-        Ordenar por fuerza
-        <select onClick={(e) => handleOrderByHP(e)} name="Ordenar de forma..." id="">
-          <option value="q" >---</option>
-          <option value="asc">Menos fuertes primero</option>
-          <option value="des">Mas furtes primero</option>
-        </select>
-      </div>
+<div className={s.conteiner}>
+        <div  className={s.conteiner_order}>
+           <div>
+            <label className={s.label} htmlFor="">Ordenar alfabeticamente</label> 
+            <select className={s.select} onChange={(e) => handleOrderByAlfabeto(e)} name="Ordenar de forma..." id="">
+              <option value="q" >---</option>
+              <option value="asc">A-Z</option>
+              <option value="des">Z-A</option>
+            </select>
+          </div>
 
+           <div>
+            <label  className={s.label} htmlFor="">Ordenar por fuerza</label> 
+             <select  className={s.select} onClick={(e) => handleOrderByHP(e)} name="Ordenar de forma..." id="">
+               <option value="q" >---</option>
+               <option value="asc">Menos fuertes primero</option>
+               <option value="des">Mas furtes primero</option>
+             </select>
+           </div>
+
+        </div>
+     
       {/* <div>
         <label  >Filtrar por Tipo</label>
         <select onChange={(e) => handleFilterType(e)} name="filterType">
@@ -165,9 +171,11 @@ export default function Home() {
       
       </div> */}
 
+
+<div className={s.conteiner_filter}>
       <div>
-        Filtrar por origen
-        <select onChange={(e) => handleFilterByCreated(e)} name="Ordenar_created_bd" >
+        <label className={s.label} htmlFor="">Filtrar por origen</label> 
+        <select  className={s.select} onChange={(e) => handleFilterByCreated(e)} name="Ordenar_created_bd" >
           <option value="todos">Todos</option>
           <option value="api">Originales</option>
           <option value="bd">Creados</option>
@@ -175,9 +183,9 @@ export default function Home() {
       </div>
 
       <div>
-        Filtrar por tipo
-        <select onChange={(e) => handleFilterType(e)}  name="Ordenar de tipo..." id=""  type=""  >
-          <option >----</option>
+       <label className={s.label} htmlFor="">Filtrar por tipo</label> 
+        <select  className={s.select} onChange={(e) => handleFilterType(e)}  name="Ordenar de tipo..." id=""  type=""  >
+          {/* <option >----</option> */}
           <option value="all">todos</option>
           <option value="steel">acero</option>
           <option value="water">agua</option>
@@ -202,14 +210,16 @@ export default function Home() {
         </select>
         
       </div>
+      </div>
 
+</div>
       { allPokemones.length>0 &&
         <div>
-          <Link to={"/home/" + Math.ceil(Math.random()*(allPokemones.length)) } >
+          <Link className={s.link} to={"/home/" + Math.ceil(Math.random()*(151)) }  >
                      <button >Tu poke aleatorio</button>
               </Link>
 
-                <h3>Pagina {currentPage} </h3>
+        <h3>Pagina {currentPage} </h3>
 
         </div>
       }    
@@ -221,7 +231,7 @@ export default function Home() {
         
       }
 
-    { (allPokemones.length > 12) &&
+     
 
       <Pagination pokemonsInPage={pokemonsInPage}
         allPokemones={allPokemones.length}
@@ -231,7 +241,7 @@ export default function Home() {
         paginadoFirs={paginadoFirs}
         paginadoLast={paginadoLast}
       />
-    }
+    
 
 
 
@@ -243,15 +253,17 @@ export default function Home() {
              
               
               <div key={a} className={s.cards}>
-               <Link to={"/home/" + p.id}>
-                 <Card key={p.id} types={p.types} createInBD={p.createInBD} name={p.name} image={p.image} />
-               </Link>
+               
+                 <Card key={p.id} types={p.types} createInBD={p.createInBD} name={p.name} image={p.image} id={p.id} />
+            
               </div>
               
                 
             )
           } )}
       </div>
-    </>
+
+      </div> 
+    
   );
 }
