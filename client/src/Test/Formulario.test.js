@@ -1,3 +1,15 @@
+// import { render, screen } from '@testing-library/react';
+// import { Provider } from 'react-redux'
+// // import Creation from '../componentes/Creation';
+// // import App from './App';
+
+
+// test('debe haber un label nombre', () => {
+//   render(<Provider />);
+//   screen.debug()
+//   const linkElement = screen.getByLabelText(/nombre/i);
+//   expect(linkElement).toBeInTheDocument();
+// });
 
 
 // import React from "react";

@@ -226,7 +226,7 @@ export default function Creation() {
             placeholder="Nombre"
             minLength="1" 
             maxLength="11" 
-            required
+            required   
           />
 
           {errors?.name &&  
@@ -241,7 +241,7 @@ export default function Creation() {
             type="number"
             value={input.hp}
             name="hp"
-            required
+            required               
             placeholder="Potencia"
             min="1"
             max="500"
@@ -258,7 +258,8 @@ export default function Creation() {
             type="number"
             value={input.attack}
             name="attack"
-            required
+            required   
+              
             placeholder="Ataque"
             min="1"
             max="500"
@@ -275,7 +276,8 @@ export default function Creation() {
             type="number"
             value={input.defense}
             name="defense"
-            required
+            required   
+        
             placeholder="Defensa"
             min="1"
             max="500"
@@ -292,7 +294,8 @@ export default function Creation() {
             type="number"
             value={input.speed}
             name="speed"
-            required
+            required   
+              
             placeholder="Velocidad"
             min="1"
             max="1000"
@@ -309,7 +312,8 @@ export default function Creation() {
             type="number"
             value={input.height}
             name="height"
-            required
+            required   
+
             placeholder="Altura"
             min="1"
             max="500"
@@ -326,7 +330,8 @@ export default function Creation() {
             type="number"
             value={input.weight}
             name="weight"
-            required
+            required   
+              
             placeholder="Peso"
             min="1"
             max="1500"
@@ -351,7 +356,8 @@ export default function Creation() {
         <div>
           <label className={styles.label}>Tipo * </label>
           <select 
-                  required  
+             required   
+                      
                   onChange={(e) => handleSelect(e)}
                   className={errors?.types ? styles.errorInput : styles.input}
                   name= "types">
@@ -363,6 +369,7 @@ export default function Creation() {
             ))
             }
             
+            {/* {errors?.types && <h3>{ errors.types}</h3>} */}
            
           </select>
 
@@ -382,14 +389,14 @@ export default function Creation() {
         </div>
         )) 
       }
-     
 
+          
           <h5 className={styles.label}>(*) Campos obligatorios</h5>
 
           {
 
             // !pokemonsExistente  ? <button type="button">Crear pokemon</button> :
-            errors?.name ||errors?.hp ||errors?.attack  ||errors?.defense ||errors?.speed ||errors?.height ||errors?.weight  ? <button type="button">Crear pokemon</button> :
+            errors?.name ||errors?.hp ||errors?.attack  ||errors?.defense ||errors?.speed ||errors?.height ||errors?.weight || !input.name || !input.hp ||!input.speed ||!input.attack ||!input.weight ||!input.height ||!input.types ?   <button type="button">Crear pokemon</button>  :
                   <div>
                         <button className={styles.btn_crear}>Crear pokemon</button>
                  </div>

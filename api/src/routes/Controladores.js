@@ -2,29 +2,34 @@ const axios = require("axios");
 
 const {Pokemon, Type} = require('../db')
 
-const getPokemonApi = async  (limit, offset) =>{
-    // const URL = `https://pokeapi.co/api/v2/pokemon`
+const getPokemonApi =  async  (limit, offset) =>{
+    // const promises = [];
+    // for (let i = 1; i <= 3; i++) {
+    //   const url = `https://pokeapi.co/api/v2/pokemon/${i}`;
+    //   promises.push( await axios(url).then(res => res.data));
+    // }
 
-
-    // const result =  await Promise.all( data.map(async (id) => {
-    //       let response = await axios.get(id.url)
-    //       const todo = await response.data
-    //       id = {...todo}
-    //       return id
-    //     }
-    //     ),
-
-    // var filenames = [1, 2, 3, 4, 5, 6,7,8 ].map(function (n) {
-    //     return `https://pokeapi.co/api/v2/pokemon/${n}`;
-    //   });    
-    //   const sinOrden = await Promise.all(filenames.map(p => promisifiedReadFile(p)));
-
-    //   for ( let r of sinOrden) {
-    //     blue(r);
-    
-    //   }
-    
-
+    // Promise.all(promises).then(results => {
+    //     const pokemon = results.map(data => ({
+    //         id: data.id,
+    //         name: data.name,
+    //         hp: data.stats[0].base_stat,
+    //         attack: data.stats[1].base_stat,
+    //         defense: data.stats[2].base_stat,
+    //         speed: data.stats[5].base_stat,
+    //         height: data.height,
+    //         weight: data.weight,
+    //         image: data.sprites.other["official-artwork"].front_default,           //home.front_shiny,   //["algo-medio"]
+    //         types: data.types.map(t=>t.type.name)
+    //     }));
+    //        console.log(pokemon)
+    //     return pokemon;
+    // }
+  
+    // )
+    //   .catch((reason) => {
+    //     
+    //   })
       //---------
          limit = 40
         const api = await  axios(`https://pokeapi.co/api/v2/pokemon?limit=${limit}`);
@@ -69,9 +74,10 @@ const getPokemonBD = async  ()=>{
 } 
 
 const getPokemonesTotal = async()=>{
+   // const datos = getPokemonApi().then(datos => datos);
     const pokemonesApi = await getPokemonApi();
     const pokemonesBD  = await getPokemonBD();
-
+// console.log(datos)
     // Promise.all([getPokemonApi()], [getPokemonBD()])
     //     .then([A.data.results , B]) = pokemonesTotales
 

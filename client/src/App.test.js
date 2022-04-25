@@ -1,17 +1,36 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import App from './App';
-import Creation from './src/Creation';
 
-test('renders learn react link', () => {
+
+// test('renders learn react link', () => {
+//   render(<App />);
+//   const linkElement = screen.getByText(/learn react/i);
+//   expect(linkElement).toBeInTheDocument();
+// });
+
+beforeEach(()=>{
   render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
-});
+})
 
 test('Renderizar saludo', () => {
-  render(<Creation />);
-  const linkElement = screen.getByText(/Crea tu pokemon/i);
-  expect(linkElement).toBeInTheDocument();
+ 
+  // screen.debug()
+  const title = screen.getByText( "Bienvenidos a la pokeApi");
+  expect(title).toBeInTheDocument();
 });
 
+
+test('Renderizar texto del boton', () => {
+ 
+  screen.debug()
+  const title = screen.getByText( /ingresar/i);
+  expect(title).toBeInTheDocument();
+});
+
+test("Debe haber un boton ingresar", () => {
+  
+  //screen.debug()
+  const btn = screen.getByRole( "button", {name: /ingresar/i} );
+  expect(btn).toBeInTheDocument();
+});
 
