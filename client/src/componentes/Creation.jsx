@@ -81,12 +81,14 @@ function validated(input) {
     } 
   }
  
-  // if (input.types) {
-  //   if(input.types.length === 0 ){
-  //       errors.types = "Seleccione al menos un tipo para su nuevo pokémon"
-  //       console.log(input.types.length)
-  //   }
-  // }
+  if (input.types.length === 0) {
+  
+
+        errors.types = "Seleccione al menos un tipo para su nuevo pokémon"
+        
+    
+    
+  }
 
 
   
@@ -117,13 +119,13 @@ export default function Creation() {
   const [errors, setErrors] = useState({});
   
 
-  // useEffect(() => {
-  //   dispatch(getTypes());
-  // }, [dispatch]);
+  useEffect(() => {
+    dispatch(getTypes());
+  }, [dispatch]);
  
-  // useEffect(() => {
-  //   dispatch(getPokemones());
-  // }, [dispatch]);
+  useEffect(() => {
+    dispatch(getPokemones());
+  }, [dispatch]);
 
 
 
@@ -143,6 +145,7 @@ export default function Creation() {
   }
 
   function handleSelect(e) {
+    e.preventDefault()
     if(!input.types.includes(e.target.value)) {
 
       setInput({
@@ -166,14 +169,16 @@ export default function Creation() {
   };
 
   function handleSubmit(e) {
-      
-    e.preventDefault();
+   e.preventDefault();
     
     const nameRepit = pokemonsExistente.find(p => p.name === input.name )
        
     if(nameRepit) {
       alert("El nombre ya existe");
       return
+    }else if(errors?.name ||errors?.hp ||errors?.attack  ||errors?.defense ||errors?.speed ||errors?.height ||errors?.weight || !input.name || !input.hp ||!input.speed ||!input.attack ||!input.weight ||!input.height ||!input.types){
+        alert("Complete los campos correctamente")
+
     } else if (input.types.length === 0){
       alert("Seleccione al menos un tipo para su pokémon")
     } else {
@@ -199,7 +204,7 @@ export default function Creation() {
   }
 
   return (
-    <>
+    <div className={styles.content}>
     <Nav/>
 
       {/* <Link to="/home">
@@ -207,9 +212,9 @@ export default function Creation() {
       </Link> */}
 
 
-      <h3 className={styles.hola}>Crea tu pokemon</h3>
       
-      <div className={styles.content}  >
+      <div   >
+        <h3 className={styles.hola}>Crea tu pokemon</h3>
       
       <form className={styles.form} onSubmit={ (e) => handleSubmit(e)}>
 
@@ -341,7 +346,7 @@ export default function Creation() {
         </div>
        
         <div>
-          <label className={styles.label}>Imagen</label>
+          <label className={styles.label}>Imagen **</label>
           <input
             className={styles.input}
             onChange={(e) => handleForm(e)}
@@ -369,7 +374,7 @@ export default function Creation() {
             ))
             }
             
-            {/* {errors?.types && <h3>{ errors.types}</h3>} */}
+           
            
           </select>
 
@@ -378,10 +383,11 @@ export default function Creation() {
         </div>
 
         { 
-        input.types.map((t) => (
-          <div className={styles.content_select}>
-              <p className={styles.addType}>{t}</p>
+        input.types.map((t,i) => (
+          <div key={i} className={styles.content_select}>
+              <h5 key={i} className={styles.addType}>{t}</h5>
               <button 
+                               
                   className={styles.btn_close}
                   type="button" 
                   onClick={() => handleDelete(t)}>X</button>
@@ -392,11 +398,11 @@ export default function Creation() {
 
           
           <h5 className={styles.label}>(*) Campos obligatorios</h5>
-
+          <h5 className={styles.label}>(**) La imagen debe estar libre de copyright</h5>
           {
 
-            // !pokemonsExistente  ? <button type="button">Crear pokemon</button> :
-            errors?.name ||errors?.hp ||errors?.attack  ||errors?.defense ||errors?.speed ||errors?.height ||errors?.weight || !input.name || !input.hp ||!input.speed ||!input.attack ||!input.weight ||!input.height ||!input.types ?   <button type="button">Crear pokemon</button>  :
+            
+            // errors?.name ||errors?.hp ||errors?.attack  ||errors?.defense ||errors?.speed ||errors?.height ||errors?.weight || !input.name || !input.hp ||!input.speed ||!input.attack ||!input.weight ||!input.height ||!input.types ?   <button type="button">Para crear, completa correctamente los campos</button>  :
                   <div>
                         <button className={styles.btn_crear}>Crear pokemon</button>
                  </div>
@@ -407,6 +413,6 @@ export default function Creation() {
        
       </form>
       </div>
-    </>
+      </div>
   );
 }

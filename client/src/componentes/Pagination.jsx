@@ -1,7 +1,7 @@
 import React from "react";
 import s from "./pagination.module.css"
 
-export const Pagination = ({ pokemonsInPage, allPokemones, paginado, paginadoPrev, paginadoNext, paginadoFirs,paginadoLast }) => {
+export const Pagination = ({ pokemonsInPage, allPokemones, paginado, paginadoPrev, paginadoNext, paginadoFirs,paginadoLast, handlePokeInPag }) => {
   // console.log(pokemonsInPage)
   const numPag = [];
 
@@ -10,7 +10,6 @@ export const Pagination = ({ pokemonsInPage, allPokemones, paginado, paginadoPre
   }
 
 
-  
 
   return (
 
@@ -32,8 +31,12 @@ export const Pagination = ({ pokemonsInPage, allPokemones, paginado, paginadoPre
           <button  className={s.btn} onClick={() => paginadoNext()}  >Siguiente</button>
           <button  className={s.btn} onClick={() => paginadoLast()} >Ultimo</button>
         </div> 
-     
 
+            <label htmlFor="">Mostrar por pagina</label>
+            <select className={s.selectPorPag} onClick={e=>handlePokeInPag(e)} name="" id="">
+            <option value="12">12</option>
+            <option value="24">24</option>
+          </select>
             
     </nav>
                   

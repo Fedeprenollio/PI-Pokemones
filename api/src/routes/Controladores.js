@@ -31,7 +31,9 @@ const getPokemonApi =  async  (limit, offset) =>{
     //     
     //   })
       //---------
-         limit = 40
+
+      try {
+        limit = 40
         const api = await  axios(`https://pokeapi.co/api/v2/pokemon?limit=${limit}`);
         // console.log(api.data.results)
         const infoApi = await api.data.results.map(p=> axios(p.url));
@@ -49,7 +51,7 @@ const getPokemonApi =  async  (limit, offset) =>{
                 speed: p.stats[5].base_stat,
                 height: p.height,
                 weight: p.weight,
-                image: p.sprites.other["official-artwork"].front_default,           //home.front_shiny,   //["algo-medio"]
+                image: p.sprites.other["official-artwork"].front_default,           
                 types: p.types.map(t=>t.type.name)
                 
             }
@@ -57,40 +59,52 @@ const getPokemonApi =  async  (limit, offset) =>{
 //console.log(pokeDetail)
              return pokeDetail
 
+      } catch (error) {
+          return error
+      }
+       
 
 }
 
 const getPokemonBD = async  ()=>{
 
+try {
     const pokemonesBD = await Pokemon.findAll({
-         include: 
-        {          
-            model: Type,
-            attributes: ['name'],
-            through: { attributes: [] }
-         } 
-    })
-    return pokemonesBD;
+        include: 
+       {          
+           model: Type,
+           attributes: ['name'],
+           through: { attributes: [] }
+        } 
+   })
+   return pokemonesBD;
+} catch (error) {
+    return error
+}
+
+    
 } 
 
 const getPokemonesTotal = async()=>{
-   // const datos = getPokemonApi().then(datos => datos);
+   
+   try {
     const pokemonesApi = await getPokemonApi();
     const pokemonesBD  = await getPokemonBD();
-// console.log(datos)
-    // Promise.all([getPokemonApi()], [getPokemonBD()])
-    //     .then([A.data.results , B]) = pokemonesTotales
 
-    //     console.log(A.data.results)
     const pokemonesTotales = pokemonesApi.concat(pokemonesBD)
 
     return pokemonesTotales;
-    
-    
+       
+   } catch (error) {
+       return error
+   }
+      
 };
 
 const getpokemonNameAPI = async(name)=>{
-const api = await axios(`https://pokeapi.co/api/v2/pokemon/${name}`)
+
+    
+        const api = await axios(`https://pokeapi.co/api/v2/pokemon/${name}`)
 const p = await api.data
 return {
     id: p.id,
@@ -105,6 +119,7 @@ return {
     types: p.types.map(t=>t.type.name)
 }
 
+   
 }
 
 
@@ -129,31 +144,18 @@ try {
                 res.status(200).send(pokeNameApiArray)
             }
         } catch (error) {
-            if(error.response){
-                res.status(error.response.status).send({msg: err.response.status})
-            }else if (error.request){
-                next(err.request)
-            }else{
+           
                 next(error)
-            }
+            
         }
-       
-            // {
-               
-            //     res.status(404).send("El pokemon no existe")
-            // }
-
+           
     } else{
         res.status(200).send(pokemones)
     }    
 } catch (error) {
-    if(error.response){
-        res.status(error.response.status).send({msg: err.response.status})
-    }else if (error.request){
-        next(err.request)
-    }else{
+ 
         next(error)
-    }
+    
 }
     
 };
@@ -179,7 +181,9 @@ const getPokemonId = async (req,res)=>{
 
             
         } catch (error) {
-            res.status(404).send("Algo anda mal");
+          
+                next(error)
+            
            
         }};
 
@@ -188,6 +192,7 @@ const postPokemon = async (req,res, next) =>{
     const {name, hp, attack, defense, speed, height, weight, image , createInBD, types} = req.body;
            
     try {
+
         const newPokemon =  await Pokemon.create({ name, hp, attack, defense, speed, height, weight, createInBD , image})  ;
         
         //PROBANDO SI ES NECESARIO OBTENER LOS TIPOS
@@ -199,14 +204,10 @@ const postPokemon = async (req,res, next) =>{
        await newPokemon.addType(tipoBD   )
        res.send("newPokemon creato correctamente")
 
-} catch (error) {
-    if(error.response){
-        res.status(error.response.status).send({msg: err.response.status})
-    }else if (error.request){
-        next(err.request)
-    }else{
+    } catch (error) {
+   
         next(error)
-    }
+    
 }};
 
 const downloadOfApiType = async ()=>{
@@ -224,19 +225,15 @@ const downloadOfApiType = async ()=>{
           
 };
 
-const getTipos = async (req,res) =>{
+const getTipos = async (req,res, next) =>{
    try {
             await downloadOfApiType()
             const typesAll = await Type.findAll()
             res.status(200).send(typesAll)
    } catch (error) {
-            if(error.response){
-                res.status(error.response.status).send({msg: err.response.status})
-            }else if (error.request){
-                next(err.request)
-            }else{
+           
                 next(error)
-            }
+            
        
    } 
   
@@ -262,13 +259,9 @@ const deletePoke = async (req,res, next) => {
         
 
     } catch (error) {
-        if(error.response){
-            res.status(error.response.status).send({msg: err.response.status})
-        }else if (error.request){
-            next(err.request)
-        }else{
+       
             next(error)
-        }
+        
     }
 
 
@@ -320,13 +313,9 @@ const putPoke = async (req, res, next) =>{
         
 
     } catch (error) {
-        if(error.response){
-            res.status(error.response.status).send({msg: err.response.status})
-        }else if (error.request){
-            next(err.request)
-        }else{
+     
             next(error)
-        }
+        
     }
 
 }

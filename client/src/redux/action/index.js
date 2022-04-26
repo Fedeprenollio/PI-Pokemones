@@ -15,6 +15,7 @@ export const UPDATE_POKE = "UPDATE_POKE"
 
 
 
+
 export const getPokemones = () => {
 //hacer trycath
     return async function (dispatch) {
@@ -128,6 +129,7 @@ export const searchPoke = (name) => {
         } catch (error) {
            
            alert("El pokémon no existe")
+           
         }
 
        
@@ -169,18 +171,5 @@ export function deletePoke (id){
     }
 };
 
-export function updatePoke (id){
-    return async function (dispatch){
-        try {
-             await axios.put(`http://localhost:3001/pokemons/${id}` )
 
-            return dispatch({
-                type: UPDATE_POKE,
-                payload: id
-                
-            })
-        } catch (error) {
-            console.log(error)
-        }
-    }
-}
+

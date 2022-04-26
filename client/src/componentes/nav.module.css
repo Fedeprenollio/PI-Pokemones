@@ -1,0 +1,17 @@
+.btn {
+    color: #445d7a;
+    background-color: #f4bb58;
+    border: #000;
+    border-radius: 10px;
+    height:30px;
+    font-size: 20px;
+    margin: 5px;
+    transition: step-start ;
+    cursor: pointer;
+    
+}   
+
+.btn:hover{ 
+    background-color: #c2bd4e;
+    color: rgb(239, 148, 29);
+}

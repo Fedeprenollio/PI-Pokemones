@@ -1,6 +1,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
 const { expect } = require('chai');
 const session = require('supertest-session');
+const { request } = require('../../src/app.js');
 const app = require('../../src/app.js');
 const { Pokemon, conn } = require('../../src/db.js');
 
@@ -32,10 +33,12 @@ describe('Pokemon routes', () => {
     .then(() => Pokemon.create(pokemon)));
   describe('GET /pokemons', () => {
     it('should get 200', () =>
-      agent.get('/pokemons').expect(200)
+      agent.get('/pokemonss').expect(400)
     );
   });
 });
+
+
 
 
 

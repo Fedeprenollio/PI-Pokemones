@@ -31,9 +31,12 @@ export default function Home() {
   const indexOfFirstPoke = indexOfLastPoke - pokemonsInPage;
 
   
-    let currentPokes = allPokemones.slice(indexOfFirstPoke, indexOfLastPoke)  //pokemones en la pag actual
+    let currentPokes = allPokemones.slice(indexOfFirstPoke, indexOfLastPoke)  
 
- 
+    function handlePokeInPag(e){
+    setPokemonsInPage(e.target.value)
+    }
+  
 
   const paginado = (NumPag) => {
     
@@ -84,6 +87,7 @@ export default function Home() {
   function handleOrderByHP(e) {
     e.preventDefault();
     dispatch(orderByHp(e.target.value))
+    setCurrentPage(1)
     setOrder(`Ordenado ${e.target.value}`)
     //console.log(e.target.value)
   }
@@ -92,6 +96,7 @@ export default function Home() {
   function handleFilterByCreated(e) {
     e.preventDefault()
     dispatch(createdInBd(e.target.value))
+    setCurrentPage(1)
   };
 
 
@@ -100,7 +105,7 @@ export default function Home() {
   
 
   function handleFilterType(e) {
-    //e.preventDefault()
+    e.preventDefault()
     // setClick ({
     //   ...click,
      
@@ -121,6 +126,8 @@ export default function Home() {
 
   return (
    
+    allPokemones &&
+
      <div className={s.container_main}>
        
       <SearchBar  />
@@ -146,7 +153,7 @@ export default function Home() {
 
            <div>
             <label  className={s.label} htmlFor="">Ordenar por fuerza</label> 
-             <select  className={s.select} onClick={(e) => handleOrderByHP(e)} name="Ordenar de forma..." id="">
+             <select  className={s.select} onChange={(e) => handleOrderByHP(e)} name="Ordenar de forma..." id="">
                <option value="q" >---</option>
                <option value="asc">Menos fuertes primero</option>
                <option value="des">Mas furtes primero</option>
@@ -212,22 +219,26 @@ export default function Home() {
       </div>
       </div>
 
+
 </div>
+
+
+
       { allPokemones.length>0 &&
-        <div>
-          <Link className={s.link} to={"/home/" + Math.ceil(Math.random()*(151)) }  >
-                     <button >Tu poke aleatorio</button>
-              </Link>
+            <div>
+               <Link className={s.link} to={"/home/" + Math.ceil(Math.random()*(151)) }  >
+                     <button className={s.aleatorio} >Tu poke aleatorio</button>
+               </Link>
 
-        <h3>Pagina {currentPage} </h3>
+               <h3>Pagina {currentPage} </h3>
 
-        </div>
+          </div>
       }    
 
       {
-        (allPokemones.length=== 1) && 
+        (allPokemones.length> 0) && 
 
-          <button onClick={(e)=> handleRefresh(e)}>Mostrar todos</button>
+          <button className={s.aleatorio} onClick={(e)=> handleRefresh(e)}>Mostrar todos / borrar filtros</button>
         
       }
 
@@ -240,13 +251,14 @@ export default function Home() {
         paginadoNext={paginadoNext}
         paginadoFirs={paginadoFirs}
         paginadoLast={paginadoLast}
+        handlePokeInPag={handlePokeInPag}
       />
     
 
 
 
-      <div>
-        {currentPokes &&
+      <div >
+        {allPokemones.length>0?
           
           currentPokes.map((p,a) => {
            return (
@@ -260,10 +272,11 @@ export default function Home() {
               
                 
             )
-          } )}
+          } )  : <h2>Cargando...</h2>    }
       </div>
 
       </div> 
     
   );
+        
 }

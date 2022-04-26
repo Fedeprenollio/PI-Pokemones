@@ -15,10 +15,8 @@
     border:0cm;
     background-color: #f6efe7;
     
-    
   }
-  
- 
+   
   .input:focus{
   
     background-color: rgb(246, 243, 211);
@@ -33,4 +31,20 @@
    .errorInput {
      background-color: rgb(241, 154, 154);
       
+    }
+
+    .btn {
+      color: #445d7a;
+      background-color: #eee308;
+      border: #000;
+      border-radius: 10px;
+      height:30px;
+      font-size: 20px;
+      margin: 5px;
+      transition: step-start ;
+      cursor: pointer;
+    }   
+    .btn:hover{ 
+      background-color: #a39b0d;
+      color: red;
     }

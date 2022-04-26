@@ -1,31 +1,19 @@
-import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import React  from "react";
 import { Link } from "react-router-dom";
-import { getPokemones } from "../redux/action";
-//import SearchBar from "./SearchBar";
+import s from "./nav.module.css"
+
 
 export const Nav = () => {
-
-
-
-
-
-
-  
-
-
 
   return (
     <div>
       <Link to="/home">
-        <button>Home</button>
+        <button className={s.btn}>Home</button>
       </Link>
       <Link to="/created">
-        <button>Crear pokémon</button>
+        <button className={s.btn}>Crear pokémon</button>
       </Link>
-      {/* <Link to="/delete">
-      <button >Eliminar pokémon creado</button>
-      </Link> */}
+      
       
      
     </div>

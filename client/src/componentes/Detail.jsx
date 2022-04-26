@@ -42,11 +42,11 @@ export const Detail = (props) => {
      
 
         return (
-            <>
+            <div className={s.fondo}>
                 <Nav/>
 
                 {   pokeDetail.id ? 
-                    <div className={s.fondo}>
+                    <div >
                            
                        <h1 className={s.titulo}>Nombre: {pokeDetail.name}</h1>
                        <h4>Id: {pokeDetail.id}</h4>
@@ -75,10 +75,10 @@ export const Detail = (props) => {
                        }                
 
                     </div>
-                    : <div className={s.espera}>as</div>
+                    : <div > Cargando...</div>
                 }
 
-            </>
+        </div>
 
 
 

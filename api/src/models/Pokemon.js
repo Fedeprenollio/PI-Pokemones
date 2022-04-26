@@ -16,14 +16,14 @@ module.exports = (sequelize) => {
       allowNull: false,
       unique: true,
       validate: {
-      //  isAlpha:true ,
+        isAlpha:true ,
         len: [2,11]
       }, 
       
     },
     hp: {
       type: DataTypes.INTEGER,
-      // allowNull: false,
+       allowNull: false,
       validate: {
         min:1,
         max:500
@@ -32,7 +32,7 @@ module.exports = (sequelize) => {
     },
     attack: {
       type: DataTypes.INTEGER,
-      // allowNull: false,
+       allowNull: false,
       validate: {
         min:1,
         max:500
@@ -41,7 +41,7 @@ module.exports = (sequelize) => {
     },
     defense: {
       type: DataTypes.INTEGER,
-      // allowNull: false,
+       allowNull: false,
       validate: {
         min:1,
         max:500
@@ -50,7 +50,7 @@ module.exports = (sequelize) => {
     },
     speed: {
       type: DataTypes.INTEGER,
-      // allowNull: false,
+       allowNull: false,
       validate: {
         min:1,
         max:1000
@@ -59,7 +59,7 @@ module.exports = (sequelize) => {
     },
     height:{
       type: DataTypes.INTEGER,
-      // allowNull: false,
+     allowNull: false,
       validate: {
         min:1,
         max:1000
@@ -68,7 +68,7 @@ module.exports = (sequelize) => {
     },
     weight: {
       type: DataTypes.INTEGER,
-      // allowNull: false,
+     allowNull: false,
       validate: {
         min:1,
         max:1500,

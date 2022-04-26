@@ -1,4 +1,4 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import App from './App';
 
 
@@ -22,7 +22,7 @@ test('Renderizar saludo', () => {
 
 test('Renderizar texto del boton', () => {
  
-  screen.debug()
+  //screen.debug()
   const title = screen.getByText( /ingresar/i);
   expect(title).toBeInTheDocument();
 });

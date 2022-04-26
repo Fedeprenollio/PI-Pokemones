@@ -1,5 +1,5 @@
 
-import { GET_POKEMONES, FILTER_TYPE, CREATED, SEARCH, ORDER_ALFAB, ORDER_BY_HP, POST_POKEMONES, GET_TYPES, GET_DETAIL, DELETE_POKE, UPDATE_POKE } from "../action";
+import { GET_POKEMONES, FILTER_TYPE, CREATED, SEARCH, ORDER_ALFAB, ORDER_BY_HP, POST_POKEMONES, GET_TYPES, GET_DETAIL, DELETE_POKE, UPDATE_POKE,  FILTER_SPEED_MIN } from "../action";
 
 
 let inicialState = {
@@ -8,7 +8,8 @@ let inicialState = {
     types: [],
     detail: [],
     pokemonBD: [],
-    pokemonUpdate: []
+    pokemonUpdate: [],
+    
 
 }
 
@@ -126,16 +127,10 @@ function rootReducer(state = inicialState, action) {
                 pokemon: pokeDeleteBD
             };
 
-        case UPDATE_POKE:
-            console.log(action.payload)
+   
 
 
-
-
-            return{
-                ...state,
-                pokemon : action.payload
-            }
+        
         default: return state
 
     }

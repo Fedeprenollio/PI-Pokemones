@@ -47,13 +47,9 @@ export default function SearchBar() {
      
      
  const handleSubmit =  (e )=>{
-
-
    e.preventDefault()
-
-    dispatch(searchPoke(search))
-    
-    setSearch("")
+   dispatch(searchPoke(search))
+   setSearch("")
 }   
 
 
@@ -76,6 +72,7 @@ export default function SearchBar() {
 
                    
                <button  
+                    className={s.btn}
                     onClick={(e)=> handleSubmit(e)} 
                     type="submit">Buscar</button>
                 
