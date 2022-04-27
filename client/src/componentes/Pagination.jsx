@@ -38,6 +38,8 @@ export const Pagination = ({ pokemonsInPage, allPokemones, paginado, paginadoPre
             <option value="24">24</option>
           </select>
             
+
+          
     </nav>
                   
   );

@@ -30,9 +30,7 @@ export const getPokemones = () => {
            
         alert("Pokémon no encontrado")
        } 
-       
-       
-    }
+       }
 };
 
 export const getTypes = ()=>{
@@ -46,12 +44,8 @@ function retorn(pro){
                 type: GET_TYPES,
                 payload: pro
             })
-
 }
-
 }
-
-
 }
      
 export const postPokemones = (payload)=>{
