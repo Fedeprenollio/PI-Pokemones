@@ -7,10 +7,6 @@ import Home from "./componentes/Home";
 import Creation from "./componentes/Creation"
 import { Detail } from "./componentes/Detail";
 
-
-
-
-
 function App() {
   return (
     <BrowserRouter>
@@ -23,8 +19,6 @@ function App() {
           <Route path ="/home/:id" element={<Detail/>} /> 
           <Route path ="/created" element={<Creation/>} /> 
          
-
-
           <Route path="*" element={<h1>404 not found</h1>}></Route>
         </Routes>
 

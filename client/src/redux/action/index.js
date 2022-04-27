@@ -12,7 +12,7 @@ export const FILTER_TYPE = "FILTER_TYPE";
 export const GET_DETAIL = "GET_DETAIL";
 export const DELETE_POKE = "DELETE_POKE";
 export const UPDATE_POKE = "UPDATE_POKE"
-
+export const CLEAR_DETAIL = "CLEAR_DETAIL"
 
 
 
@@ -36,19 +36,35 @@ export const getPokemones = () => {
 };
 
 export const getTypes = ()=>{
-    return async function (dispatch) {
-try {
-    let json = await axios(`http://localhost:3001/types/`)
+
+return function(dispatch){
+    fetch(`http://localhost:3001/types/`).then(res=>res.json()).then(pro=> retorn(pro)).catch(err=>console.log(err))
+
+function retorn(pro){
 
     return dispatch({
-        type: GET_TYPES,
-        payload: json.data
-    })
-} catch (error) {
-    console.log(error)
+                type: GET_TYPES,
+                payload: pro
+            })
+
 }
+
+}
+
+
+//     return async function (dispatch) {
+// try {
+//     let json = await axios(`http://localhost:3001/types/`)
+
+//     return dispatch({
+//         type: GET_TYPES,
+//         payload: json.data
+//     })
+// } catch (error) {
+//     console.log(error)
+// }
        
-    }
+//     }
 
 }
      
@@ -62,12 +78,7 @@ try {
 } catch (error) {
     console.log(error)
 }
-
-
-          
-        }
-
-}
+ }}
 
 
 
@@ -151,7 +162,12 @@ return async function (dispatch){
 }    
 }
 
-
+export function clearDetail (){
+    return {
+        type: CLEAR_DETAIL
+    }
+    
+}
 
 //------EXTRA redme---
 

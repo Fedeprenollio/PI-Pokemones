@@ -1,6 +1,6 @@
 import {React, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { getDetail , deletePoke, updatePoke} from '../redux/action'
+import { getDetail , deletePoke, clearDetail} from '../redux/action'
 import {Link, useParams ,useNavigate  } from "react-router-dom"
 import { Nav } from './Nav'
 import s from "./detail.module.css"
@@ -16,7 +16,11 @@ export const Detail = (props) => {
 
     useEffect( ()=>{
             dispatch(getDetail(id))
-        } ,[dispatch])
+            return (()=>{
+                dispatch(clearDetail())
+            })
+        } ,[dispatch]
+        )
    
    
     const pokeDetail = useSelector( state=> state.detail)

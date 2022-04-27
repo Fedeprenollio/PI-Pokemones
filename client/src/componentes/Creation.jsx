@@ -82,17 +82,17 @@ function validated(input) {
   }
  
   if (input.types.length === 0) {
-  
+          errors.types = "Seleccione al menos un tipo para su nuevo pokémon"
+    }
 
-        errors.types = "Seleccione al menos un tipo para su nuevo pokémon"
-        
-    
-    
-  }
+    if (input.image) {
+      if (!input.image.match(/((ftp|http|https)\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-])*((\.jpg)|(\.png)|(\.jpeg)|(\.svg))\/?(\.webp)?/)) {
+        errors.image = "No tiene apariencia de una URL valida de imagen. Si continuas, tu pokémon podría no tener imagen";
+      }
+    }
 
-
-  
-
+    // /((ftp|http|https):\/\/)?([A-z]+)\.([A-z]{2,})/gm
+    // /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/
   return errors;
 }
 
@@ -353,9 +353,12 @@ export default function Creation() {
             type="text"
             value={input.image}
             name="image"
-            placeholder="Imagen"
+            placeholder="URL de la imagen"
             
           />
+
+{errors?.image &&  
+                 <p className={styles.errors}>{errors.image} </p> }
         </div>
 
         <div>
@@ -397,8 +400,8 @@ export default function Creation() {
       }
 
           
-          <h5 className={styles.label}>(*) Campos obligatorios</h5>
-          <h5 className={styles.label}>(**) La imagen debe estar libre de copyright</h5>
+          <h5 className={styles.campos}>(*) Campos obligatorios</h5>
+          <h5 className={styles.campos}>(**) La imagen debe estar libre de copyright</h5>
           {
 
             

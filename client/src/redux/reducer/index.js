@@ -1,5 +1,5 @@
 
-import { GET_POKEMONES, FILTER_TYPE, CREATED, SEARCH, ORDER_ALFAB, ORDER_BY_HP, POST_POKEMONES, GET_TYPES, GET_DETAIL, DELETE_POKE, UPDATE_POKE,  FILTER_SPEED_MIN } from "../action";
+import { GET_POKEMONES, FILTER_TYPE, CREATED, SEARCH, ORDER_ALFAB, ORDER_BY_HP, POST_POKEMONES, GET_TYPES, GET_DETAIL, DELETE_POKE, UPDATE_POKE,  FILTER_SPEED_MIN, CLEAR_DETAIL } from "../action";
 
 
 let inicialState = {
@@ -72,41 +72,44 @@ function rootReducer(state = inicialState, action) {
             }
 
         case FILTER_TYPE:
-           // let allPokemonsArr = [];
+           
             let allPokemons2 = state.allPokemonsForFilter;
-
-          //   allPokemonsArr.push(allPokemons2)
+         
             let str = action.payload
 
             let pokeFilterAPI = action.payload === "all" ?  allPokemons2 :  allPokemons2.filter(  p=> p.types.includes( str)   )	
            
-            const pokeFilterBD=allPokemons2.filter(p=>p.types)
-            const pokeFilterTypeBD = pokeFilterBD.filter(p=>p.types.find(t=>t.name===action.payload))
+           // const pokeFilterBD=allPokemons2.filter(p=>p.types)
+            const pokeFilterTypeBD = allPokemons2.filter(p=>p.types.find(t=>t.name===action.payload))
 
-            const typesAll = pokeFilterAPI.concat(pokeFilterTypeBD) 
-                       
+            let typesAll = pokeFilterAPI.concat(pokeFilterTypeBD) 
+                   if(typesAll.length=== 0){
+                       alert("No hay pokémones de éste tipo")    
+                       typesAll  = allPokemons2
+                   }
             return {
                 ...state,
                 pokemon: typesAll
-              //  .concat(pokeFilterAPIBD)
+      
              }
 
         case CREATED:
             const allPokemons = state.allPokemonsForFilter;
-            const pokeFilter = action.payload === "bd" ? allPokemons.filter(p => p.createInBD) : allPokemons.filter(p => !p.createInBD)
+            let pokeFilter = action.payload === "bd" ? allPokemons.filter(p => p.createInBD) : allPokemons.filter(p => !p.createInBD)
+
+            if(pokeFilter.length=== 0){
+                alert("No hay pokémones de ésta categoria")    
+                pokeFilter  = allPokemons
+            }
 
             return {
                 ...state,
                 pokemon: action.payload === "todos" ? state.allPokemonsForFilter : pokeFilter,
-              //  pokemonBD : allPokemons.filter(p => p.createInBD)
-
+          
             };
 
         case SEARCH:
-            // const pokeSearch = state.allPokemonsForFilter
-            // console.log(action.payload[0].name)
-            // const search = pokeSearch.filter( p=> p.name === action.payload.name)
-        
+           
             return {
                 ...state,
                 pokemon: action.payload
@@ -116,6 +119,13 @@ function rootReducer(state = inicialState, action) {
                 ...state,
                 detail: action.payload
             };
+
+
+        case CLEAR_DETAIL:
+            return {
+                ...state,
+                detail: []
+            }    
             //------extra redme
         
         case DELETE_POKE:

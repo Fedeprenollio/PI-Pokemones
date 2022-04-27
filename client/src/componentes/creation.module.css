@@ -120,3 +120,8 @@ width: 100%;
     font-size: 23px;
     
   }
+
+  .campos{
+    display: flex;
+    align-items: center;
+  }
