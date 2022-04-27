@@ -34,14 +34,7 @@ export const Detail = (props) => {
            }
          } }
 
-        function handleUpdate(e){
-            if(window.confirm("¿Estas seguro de modificar a tu pokémon?" ) === true) {
-                if (e.target.name === "update") {
-                    // dispatch(updatePoke(props)); 
-                  
-                    
-               }
-             } }
+      
 
      
 
@@ -69,14 +62,7 @@ export const Detail = (props) => {
                                 <button className={s.btn_delete} onClick={(e)=> handleDelete(e)} value={pokeDetail.id} name="delete">Eliminar</button>
                                 
                        }
-                       {
-                            pokeDetail.createInBD &&
-                                    
-                                    <button onClick={(e)=> handleUpdate(e)} value={pokeDetail.id} name="update">Modicar</button>
-                                    
-                                    
-                                            
-                       }                
+                       
 
                     </div>
                     : <div > Cargando...</div>
