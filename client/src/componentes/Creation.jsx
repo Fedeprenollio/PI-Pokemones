@@ -56,8 +56,8 @@ function validated(input) {
       errors.weight = "Se requiere la potencia del pokémon";
     } else if (input.weight.match([0-9])) {
       errors.weight = "El valor debe ser numerico";
-    } else if  (input.weight > 500 || input.weight< 1 ) {
-        errors.weight = "El valor debe estar entre 1 y 500";
+    } else if  (input.weight > 1500 || input.weight< 1 ) {
+        errors.weight = "El valor debe estar entre 1 y 1500";
     } 
   }
 
@@ -67,7 +67,7 @@ function validated(input) {
     } else if (input.speed.match([0-9])) {
       errors.speed = "El valor debe ser numerico";
     } else if  (input.speed > 1000 || input.speed< 1 ) {
-        errors.speed = "El valor debe estar entre 1 y 500";
+        errors.speed = "El valor debe estar entre 1 y 1000";
     } 
   }
  
@@ -87,10 +87,10 @@ function validated(input) {
 
     if (input.image) {
       if (!input.image.match(/((ftp|http|https)\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-])*((\.jpg)|(\.png)|(\.jpeg)|(\.svg))\/?(\.webp)?/)) {
-        errors.image = "No tiene apariencia de una URL valida de imagen. Si continuas, tu pokémon podría no tener imagen";
+        errors.image = "No tiene apariencia de una URL valida de imagen.Si continuas, tu pokémon podría no tener imagen";
       }
     }
-
+    // (?:(?:(?:https?|ftp):)?//)
     // /((ftp|http|https):\/\/)?([A-z]+)\.([A-z]{2,})/gm
     // /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/
   return errors;
@@ -401,7 +401,7 @@ export default function Creation() {
 
           
           <h5 className={styles.campos}>(*) Campos obligatorios</h5>
-          <h5 className={styles.campos}>(**) La imagen debe estar libre de copyright</h5>
+          <h5 className={styles.campos}>(**) La imagen debe estar libre de copyright y asegúrate que su URL sea correcta</h5>
           {
 
             

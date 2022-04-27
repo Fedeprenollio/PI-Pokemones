@@ -232,16 +232,22 @@ export default function Home() {
           </button>
         )}
 
-        <Pagination
-          pokemonsInPage={pokemonsInPage}
-          allPokemones={allPokemones.length}
-          paginado={paginado}
-          paginadoPrev={paginadoPrev}
-          paginadoNext={paginadoNext}
-          paginadoFirs={paginadoFirs}
-          paginadoLast={paginadoLast}
-          handlePokeInPag={handlePokeInPag}
-        />
+           {
+             allPokemones.length>0 &&
+             <Pagination
+             pokemonsInPage={pokemonsInPage}
+             allPokemones={allPokemones.length}
+             paginado={paginado}
+             paginadoPrev={paginadoPrev}
+             paginadoNext={paginadoNext}
+             paginadoFirs={paginadoFirs}
+             paginadoLast={paginadoLast}
+             handlePokeInPag={handlePokeInPag}
+           />
+
+           } 
+
+       
 
         <div>
           {allPokemones.length > 0 ? (

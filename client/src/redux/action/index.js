@@ -52,20 +52,6 @@ function retorn(pro){
 }
 
 
-//     return async function (dispatch) {
-// try {
-//     let json = await axios(`http://localhost:3001/types/`)
-
-//     return dispatch({
-//         type: GET_TYPES,
-//         payload: json.data
-//     })
-// } catch (error) {
-//     console.log(error)
-// }
-       
-//     }
-
 }
      
 export const postPokemones = (payload)=>{
