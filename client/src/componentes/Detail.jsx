@@ -57,6 +57,7 @@ export const Detail = (props) => {
                         
                         
                         <img className={s.img} src= {pokeDetail.image? pokeDetail.image : "https://programacion.net/files/article/20161110041116_image-not-found.png"  } alt="" />
+                        
                        {
                            pokeDetail.createInBD &&
                                 <button className={s.btn_delete} onClick={(e)=> handleDelete(e)} value={pokeDetail.id} name="delete">Eliminar</button>
