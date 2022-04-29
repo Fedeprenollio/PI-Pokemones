@@ -350,7 +350,7 @@ export default function Creation() {
           <input
             className={styles.input}
             onChange={(e) => handleForm(e)}
-            type="text"
+            type="url"
             value={input.image}
             name="image"
             placeholder="URL de la imagen"

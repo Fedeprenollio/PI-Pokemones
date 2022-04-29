@@ -213,6 +213,9 @@ export default function Home() {
           </div>
         </div>
 
+    
+
+
         {allPokemones.length > 0 && (
           <div>
             <Link
@@ -243,6 +246,8 @@ export default function Home() {
              paginadoFirs={paginadoFirs}
              paginadoLast={paginadoLast}
              handlePokeInPag={handlePokeInPag}
+             currentPage={currentPage}
+             
            />
 
            } 

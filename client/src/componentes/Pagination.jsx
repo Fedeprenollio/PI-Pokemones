@@ -1,7 +1,7 @@
 import React from "react";
 import s from "./pagination.module.css"
 
-export const Pagination = ({ pokemonsInPage, allPokemones, paginado, paginadoPrev, paginadoNext, paginadoFirs,paginadoLast, handlePokeInPag }) => {
+export const Pagination = ({currentPage, pokemonsInPage, allPokemones, paginado, paginadoPrev, paginadoNext, paginadoFirs,paginadoLast, handlePokeInPag }) => {
   // console.log(pokemonsInPage)
   const numPag = [];
 

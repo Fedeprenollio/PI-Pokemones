@@ -11,8 +11,9 @@ export const SEARCH = "SEARCH"
 export const FILTER_TYPE = "FILTER_TYPE";
 export const GET_DETAIL = "GET_DETAIL";
 export const DELETE_POKE = "DELETE_POKE";
-export const UPDATE_POKE = "UPDATE_POKE"
-export const CLEAR_DETAIL = "CLEAR_DETAIL"
+export const UPDATE_POKE = "UPDATE_POKE";
+export const CLEAR_DETAIL = "CLEAR_DETAIL";
+export const PUT_POKE = "PUT_POKE"
 
 
 
@@ -20,25 +21,38 @@ export const getPokemones = () => {
 //hacer trycath
     return async function (dispatch) {
 
-       try {
-        let json = await axios(`http://localhost:3001/pokemons/`);
-        return dispatch({
-            type: GET_POKEMONES,
-            payload: json.data
-        })
-       } catch (error) {
+
+        axios("/pokemons/")
+            .then( pokemon => {
+                return  dispatch({
+                type: GET_POKEMONES,
+                payload: pokemon.data
+            })} )
+            .catch(err => { console.log(err)
+              return  alert("Pokémon no encontrado")
+
+            }  )
+
+
+    //    try {
+    //     let json = await axios(`http://localhost:3001/pokemons/`);
+    //     return dispatch({
+    //         type: GET_POKEMONES,
+    //         payload: dat
+    //     })
+    //    } catch (error) {
            
-        alert("Pokémon no encontrado")
-       } 
+    //     alert("Pokémon no encontrado")
+    //    } 
        }
 };
 
 export const getTypes = ()=>{
 
 return function(dispatch){
-    fetch(`http://localhost:3001/types/`).then(res=>res.json()).then(pro=> retorn(pro)).catch(err=>console.log(err))
+    fetch(`/types/`).then(res=>res.json()).then(pro=> vaca(pro)).catch(err=>console.log(err))
 
-function retorn(pro){
+function vaca(pro){
 
     return dispatch({
                 type: GET_TYPES,
@@ -52,7 +66,7 @@ export const postPokemones = (payload)=>{
         return async function (dispatch){
 try {
         
-    let json = await axios.post(`http://localhost:3001/pokemons/`, payload)
+    let json = await axios.post(`/pokemons/`, payload)  //url + body
 
     return json
 } catch (error) {
@@ -111,7 +125,7 @@ export const searchPoke = (name) => {
     return async function (dispatch) {
 
         try {
-            let json = await axios(`http://localhost:3001/pokemons?name=${name}`)
+            let json = await axios(`/pokemons?name=${name}`)
             return dispatch({
                 type: SEARCH,
                 payload: json.data
@@ -131,7 +145,7 @@ export function getDetail (id){
 
 return async function (dispatch){
     try {
-        let json = await axios( `http://localhost:3001/pokemons/${id}` )     
+        let json = await axios( `/pokemons/${id}` )     
         return dispatch({
             type:GET_DETAIL,
             payload: json.data
@@ -154,7 +168,7 @@ export function clearDetail (){
 export function deletePoke (id){
     return async function (dispatch){
         try {
-             await axios.delete(`http://localhost:3001/pokemons/${id}` )
+             await axios.delete(`/pokemons/${id}` )
 
             return dispatch({
                 type: DELETE_POKE,
@@ -167,5 +181,27 @@ export function deletePoke (id){
     }
 };
 
+
+export function pokemonUpdate (poke){
+// return {
+//     type: PUT_POKE,
+//     payload: poke
+// }
+
+
+    // return async function (dispatch){
+    //     try {
+    //          await axios.put(`http://localhost:3001/pokemons/${id}`, poke )
+
+    //         return dispatch({
+    //             type: PUT_POKE,
+    //             payload: poke
+                
+    //         })
+    //     } catch (error) {
+    //         console.log(error)
+    //     }
+    // }
+}
 
 

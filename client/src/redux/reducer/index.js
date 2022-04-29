@@ -1,5 +1,5 @@
 
-import { GET_POKEMONES, FILTER_TYPE, CREATED, SEARCH, ORDER_ALFAB, ORDER_BY_HP, POST_POKEMONES, GET_TYPES, GET_DETAIL, DELETE_POKE, UPDATE_POKE,  FILTER_SPEED_MIN, CLEAR_DETAIL } from "../action";
+import { GET_POKEMONES, FILTER_TYPE, CREATED, SEARCH, ORDER_ALFAB, ORDER_BY_HP, POST_POKEMONES, GET_TYPES, GET_DETAIL, DELETE_POKE, UPDATE_POKE,  FILTER_SPEED_MIN, CLEAR_DETAIL, PUT_POKE } from "../action";
 
 
 let inicialState = {
@@ -139,7 +139,14 @@ function rootReducer(state = inicialState, action) {
 
    
 
+            case PUT_POKE:
+             
 
+                return {
+                 ...state,
+                 pokemonUpdate : action.payload
+            
+                }
         
         default: return state
 

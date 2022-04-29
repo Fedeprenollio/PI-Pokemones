@@ -63,7 +63,7 @@ export default function SearchBar() {
                     className= {errors?.search ? s.errorInput : s.input}
                     onChange={(e)=> handleSearch(e)} 
                     placeholder="Busca tu pokemon" 
-                    type="text"  
+                    type="search"  
                     name="input" 
                 />
               
