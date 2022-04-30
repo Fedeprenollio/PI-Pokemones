@@ -102,7 +102,7 @@ export default function Creation() {
 
   const types = useSelector((state) => state.types);
   const pokemonsExistente = useSelector( state => state.pokemon)
-  
+
 
   const [input, setInput] = useState({
     name: "",
@@ -157,7 +157,7 @@ export default function Creation() {
         types: [...input.types, e.target.value]}));
     }
   }
- 
+ console.log(types)
     
   
 
@@ -375,6 +375,7 @@ export default function Creation() {
               types.map((t,i) => (
               <option key={i}  value={t.name}>{t.name}</option>
             ))
+            
             }
             
            

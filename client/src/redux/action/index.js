@@ -50,15 +50,16 @@ export const getPokemones = () => {
 export const getTypes = ()=>{
 
 return function(dispatch){
-    fetch(`/types/`).then(res=>res.json()).then(pro=> vaca(pro)).catch(err=>console.log(err))
-
-function vaca(pro){
-
-    return dispatch({
+    axios(`/types/`)
+        .then(type=> {
+            return dispatch({
                 type: GET_TYPES,
-                payload: pro
+                payload: type.data
             })
-}
+        })
+        .catch(err=>console.log(err))
+
+
 }
 }
      
